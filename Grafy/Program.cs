@@ -56,14 +56,46 @@ namespace Grafy
                 numerPierwszegoWierzcholka = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Podaj drugi wierzchołek do którego ma wchodzić krawędź");
                 numerDrugiegoWierzcholka = Convert.ToInt32(Console.ReadLine());
-               
-                Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = 1;
-                Macierz[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = 1;
+                if (Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] == 0)
+                {
+                    Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = 1;
+                    Macierz[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = 1;
+                }
+                else
+                    Console.WriteLine("Krawędź już istnieje");
                 Console.WriteLine("Dodać krawędź?");
                 i = Convert.ToInt32(Console.ReadLine());
             }
 
         }
+
+        public void usunKrawedz()
+        {
+            int i;
+            int numerPierwszegoWierzcholka;
+            int numerDrugiegoWierzcholka;
+            Console.WriteLine("Usuniąć krawędź?");
+            i = Convert.ToInt32(Console.ReadLine());
+            while (i == 1)
+            {
+                Console.WriteLine("Podaj pierwszy wierzchołek z którego usunąć krawędź");
+                numerPierwszegoWierzcholka = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Podaj drugi wierzchołek z którego usunąć krawędź");
+                numerDrugiegoWierzcholka = Convert.ToInt32(Console.ReadLine());
+                if (Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] == 0)
+                {
+                    Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = 0;
+                    Macierz[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = 0;
+                }
+                else
+                    Console.WriteLine("Taka krawędź nie istnieje");
+                
+                Console.WriteLine("Usuniąć krawędź?");
+                i = Convert.ToInt32(Console.ReadLine());
+            }
+
+        }
+
 
     }
     class Program
@@ -73,6 +105,7 @@ namespace Grafy
             Grafy graf = new Grafy();
             graf.dodajWierzcholek();
             graf.dodajKrawedz();
+            graf.usunKrawedz();
         }
     }
 }
