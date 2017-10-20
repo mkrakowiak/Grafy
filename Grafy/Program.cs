@@ -39,8 +39,30 @@ namespace Grafy
 
                 }
                 rozmiar++;
+                Console.WriteLine("Dodać wierzchołek?");
                 i = Convert.ToInt32(Console.ReadLine());
             }
+        }
+        public void dodajKrawedz()
+        {
+            int i;
+            int numerPierwszegoWierzcholka;
+            int numerDrugiegoWierzcholka;
+            Console.WriteLine("Dodać krawędź?");
+            i = Convert.ToInt32(Console.ReadLine());
+            while (i == 1)
+            {
+                Console.WriteLine("Podaj pierwszy wierzchołek z którego ma wychodzić krawędź");
+                numerPierwszegoWierzcholka = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Podaj drugi wierzchołek do którego ma wchodzić krawędź");
+                numerDrugiegoWierzcholka = Convert.ToInt32(Console.ReadLine());
+               
+                Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = 1;
+                Macierz[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = 1;
+                Console.WriteLine("Dodać krawędź?");
+                i = Convert.ToInt32(Console.ReadLine());
+            }
+
         }
 
     }
@@ -50,7 +72,7 @@ namespace Grafy
         {
             Grafy graf = new Grafy();
             graf.dodajWierzcholek();
-
+            graf.dodajKrawedz();
         }
     }
 }
