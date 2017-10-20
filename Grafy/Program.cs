@@ -103,12 +103,41 @@ namespace Grafy
                 }
                 if (maxStopien < stopien)
                     maxStopien = stopien;
+                i = 0;
                 stopien = 0;
                 numerWierzcholka++;
             }
             Console.WriteLine("Max = " + maxStopien);
         }
+        public void minStopien()
+        {
+            int stopien = 0;
+            int numerWierzcholka = 0;
+            int i = 0;
+            int minStopien = 32;
+            while (numerWierzcholka < rozmiar)
+            {
+                stopien = 0;
+                while (i < rozmiar)
+                {
+
+                    if (Macierz[numerWierzcholka, i] != -1 && Macierz[numerWierzcholka, i] == 1)
+                    {
+                        stopien++;
+                    }
+                    i++;
+                }
+                if (minStopien > stopien)
+                    minStopien = stopien;
+                i = 0;
+                numerWierzcholka++;
+            }
+            Console.WriteLine("Min = " + minStopien);
+        }
     }
+
+
+
     class Program
     {
         static void Main(string[] args)
@@ -126,6 +155,7 @@ namespace Grafy
                 Console.WriteLine("4-Usuń krawędź");
                 Console.WriteLine("5-Stopień wierzchołka");
                 Console.WriteLine("6-Maksymalny stopień grafu");
+                Console.WriteLine("7-Minimalny stopień grafu");
                 Console.WriteLine("0-Koniec");
 
 
@@ -164,6 +194,9 @@ namespace Grafy
                         break;
                     case 6:
                         graf.maxStopien();
+                        break;
+                    case 7:
+                        graf.minStopien();
                         break;
                     default:
                         Console.WriteLine("Zły wybór");
