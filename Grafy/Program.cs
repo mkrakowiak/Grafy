@@ -43,6 +43,29 @@ namespace Grafy
                 i = Convert.ToInt32(Console.ReadLine());
             }
         }
+        public void usunWierzcholek()
+        {
+
+            int i = 1;
+            int numerWiercholka;
+
+            Console.WriteLine("Usunąć wierzchołek?");
+            i = Convert.ToInt32(Console.ReadLine());
+            while (i == 1)
+            {
+                Console.WriteLine("Podaj numer wierzchołka");
+                numerWiercholka = Convert.ToInt32(Console.ReadLine());
+                for (int q = 0; q < 32; q++)
+                {
+                    Macierz[numerWiercholka, q] = -1;
+                    Macierz[q, numerWiercholka] = -1;
+
+                }
+                
+                Console.WriteLine("Usunąć wierzchołek?");
+                i = Convert.ToInt32(Console.ReadLine());
+            }
+        }
         public void dodajKrawedz()
         {
             int i;
@@ -56,6 +79,7 @@ namespace Grafy
                 numerPierwszegoWierzcholka = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Podaj drugi wierzchołek do którego ma wchodzić krawędź");
                 numerDrugiegoWierzcholka = Convert.ToInt32(Console.ReadLine());
+                if(numerPierwszegoWierzcholka == -1 || numerDrugiegoWierzcholka == -1)
                 if (Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] == 0)
                 {
                     Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = 1;
@@ -97,6 +121,7 @@ namespace Grafy
         }
 
 
+
     }
     class Program
     {
@@ -104,8 +129,10 @@ namespace Grafy
         {
             Grafy graf = new Grafy();
             graf.dodajWierzcholek();
+            graf.usunWierzcholek();
             graf.dodajKrawedz();
             graf.usunKrawedz();
+
         }
     }
 }
