@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace Grafy
 {
+    class Grafy
+    {
+        int[,] Macierz;
+
+
+    }
     class Program
     {
         static void Main(string[] args)
         {
+            
+
+
         }
     }
 }
