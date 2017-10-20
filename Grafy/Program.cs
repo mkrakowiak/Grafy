@@ -91,9 +91,10 @@ namespace Grafy
             int maxStopien=0;
             while (numerWierzcholka < rozmiar)
             {
+
                 while (i < rozmiar)
                 {
-                    stopien = 0;
+                    
                     if (Macierz[numerWierzcholka, i] != -1 && Macierz[numerWierzcholka, i] == 1)
                     {
                         stopien++;
@@ -102,6 +103,7 @@ namespace Grafy
                 }
                 if (maxStopien < stopien)
                     maxStopien = stopien;
+                stopien = 0;
                 numerWierzcholka++;
             }
             Console.WriteLine("Max = " + maxStopien);
