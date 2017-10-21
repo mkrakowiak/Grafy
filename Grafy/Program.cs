@@ -193,11 +193,85 @@ namespace Grafy
             }
             ciagStopni.Sort();
             ciagStopni.Reverse();
+            
             Console.WriteLine("Ciąg stopni wierzchołków to: ");
             foreach (int element in ciagStopni)
             {
                 Console.Write(element + " ");
             }
+           
+        }
+
+        public void podgrafIzomorficzny()
+        {
+            int[,] MacierzDo2;
+            MacierzDo2 = new int[32, 32];
+            for(int i = 0; i<rozmiar; i++)
+            {
+                for(int q = 0; q < rozmiar; q++)
+                {
+                   // MacierzDo2[i,q]=Macierz[i,q]
+                }
+
+            }
+
+        }
+        public void sprCiagGrafowy()
+        {
+            ArrayList ciagStopni = new ArrayList();
+            int suma = 0;
+            char i = 'n';
+            int q = 0;
+            int m = 0;
+            while (i != 't')
+            {
+                Console.WriteLine("Podaj stopeń");
+                ciagStopni.Add(Convert.ToInt32(Console.ReadLine()));
+                Console.WriteLine("Koniec?");
+                i = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+            }
+
+            foreach (int element in ciagStopni)
+            {
+                suma = suma + element;
+            }
+            if (suma % 2 == 0)
+            {
+                ciagStopni.Sort();
+                ciagStopni.Reverse();
+                while (m < ciagStopni.Count)
+                {
+                    q = (int)ciagStopni[m];
+                    ciagStopni[m] = 0;
+                    
+                    while (q == m)
+                    {
+                        ciagStopni[m+q] =(int) ciagStopni[m+q] - 1;
+
+
+                        q--;
+
+                    }
+                    m++;
+                }
+
+
+                bool ok = true;
+                foreach (int element in ciagStopni)
+                {
+                    if (element != 0)
+                        ok = false; 
+                }
+                if (ok == false)
+                    Console.WriteLine("Ciąg nie jest grafowy");
+                else
+                    Console.WriteLine("Ciąg jest grafowy");
+
+
+            }
+            else
+                Console.WriteLine("Ciąg liczb naturalnych nie jest ciągiem grafowym ");
         }
     }
 
@@ -224,6 +298,7 @@ namespace Grafy
                 Console.WriteLine("7-Minimalny stopień grafu");
                 Console.WriteLine("8-Wszaczenie ilości wierzchołków parzdystego i nie parzystego stopnia");
                 Console.WriteLine("9-Wypisanie Ciągu stopni wierzchołków");
+                Console.WriteLine("10-Sprawdź czy ciąg liczb naturalnych jest ciągiem grafowym");
                 Console.WriteLine("0-Koniec");
 
 
@@ -271,6 +346,9 @@ namespace Grafy
                         break;
                     case 9:
                         graf.ciagStopniWierzcholkow();
+                        break;
+                    case 10:
+                        graf.sprCiagGrafowy();
                         break;
                     default:
                         Console.WriteLine("Zły wybór");
