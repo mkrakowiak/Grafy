@@ -134,6 +134,36 @@ namespace Grafy
             }
             Console.WriteLine("Min = " + minStopien);
         }
+        public void parzystyNieparzystyStopien()
+        {
+            int stopien = 0;
+            int numerWierzcholka = 0;
+            int i = 0;
+            int parzyste = 0;
+            int nieparzyste = 0;
+            while (numerWierzcholka < rozmiar)
+            {
+
+                while (i < rozmiar)
+                {
+
+                    if (Macierz[numerWierzcholka, i] != -1 && Macierz[numerWierzcholka, i] == 1)
+                    {
+                        stopien++;
+                    }
+                    i++;
+                }
+                if (stopien % 2 == 0)
+                    parzyste++;
+                else
+                    nieparzyste++;
+                i = 0;
+                stopien = 0;
+                numerWierzcholka++;
+            }
+            Console.WriteLine("Liczba wierzchołków o parzystym stopniu = " + parzyste + " Liczba wierzchołków o nieparzystym stopniu = " + nieparzyste);
+        }
+
     }
 
 
@@ -149,6 +179,7 @@ namespace Grafy
             Grafy graf = new Grafy();
             
             while (caseSwitch !=0) {
+                Console.WriteLine();
                 Console.WriteLine("1-Dodaj wierzchołek");
                 Console.WriteLine("2-Usuń wierzchołek");
                 Console.WriteLine("3-Dodaj krawędź");
@@ -156,6 +187,7 @@ namespace Grafy
                 Console.WriteLine("5-Stopień wierzchołka");
                 Console.WriteLine("6-Maksymalny stopień grafu");
                 Console.WriteLine("7-Minimalny stopień grafu");
+                Console.WriteLine("8-Wszaczenie ilości wierzchołków parzdystego i nie parzystego stopnia");
                 Console.WriteLine("0-Koniec");
 
 
@@ -197,6 +229,9 @@ namespace Grafy
                         break;
                     case 7:
                         graf.minStopien();
+                        break;
+                    case 8:
+                        graf.parzystyNieparzystyStopien();
                         break;
                     default:
                         Console.WriteLine("Zły wybór");
