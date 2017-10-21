@@ -222,7 +222,6 @@ namespace Grafy
             int suma = 0;
             char i = 'n';
             int q = 0;
-            int m = 0;
             while (i != 't')
             {
                 Console.WriteLine("Podaj stopeń");
@@ -236,24 +235,26 @@ namespace Grafy
             {
                 suma = suma + element;
             }
-            if (suma % 2 == 0)
+            ciagStopni.Sort();
+            ciagStopni.Reverse();
+            if (suma % 2 == 0 && (int)ciagStopni[0] < ciagStopni.Count)
             {
                 ciagStopni.Sort();
                 ciagStopni.Reverse();
-                while (m < ciagStopni.Count)
+                while ((int)ciagStopni[0]>0)
                 {
-                    q = (int)ciagStopni[m];
-                    ciagStopni[m] = 0;
                     
-                    while (q == 0)
+                    q = (int)ciagStopni[0];
+                    ciagStopni.RemoveAt(0);
+                    
+                    while (q != 0)
                     {
-                        ciagStopni[m+q] =(int) ciagStopni[m+q] - 1;
-
-
+                        ciagStopni[q-1] =(int) ciagStopni[q-1] - 1;
                         q--;
 
                     }
-                    m++;
+                    ciagStopni.Sort();
+                    ciagStopni.Reverse();
                 }
 
 
