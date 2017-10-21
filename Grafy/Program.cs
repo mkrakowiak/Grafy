@@ -36,7 +36,6 @@ namespace Grafy
         }
         public void usunWierzcholek(int numerWiercholka)
         {              
-                numerWiercholka = Convert.ToInt32(Console.ReadLine());
                 for (int q = 0; q < 32; q++)
                 {
                     Macierz[numerWiercholka, q] = -1;
@@ -100,9 +99,10 @@ namespace Grafy
                     {
                         stopien++;
                     }
+                   
                     i++;
                 }
-                if (maxStopien < stopien)
+                if (maxStopien < stopien && Macierz[numerWierzcholka, i] != -1)
                     maxStopien = stopien;
                 i = 0;
                 stopien = 0;
@@ -128,7 +128,7 @@ namespace Grafy
                     }
                     i++;
                 }
-                if (minStopien > stopien)
+                if (minStopien > stopien && Macierz[numerWierzcholka, i] != -1)
                     minStopien = stopien;
                 i = 0;
                 numerWierzcholka++;
@@ -154,10 +154,11 @@ namespace Grafy
                     }
                     i++;
                 }
-                if (stopien % 2 == 0)
+                if (stopien % 2 == 0 && Macierz[numerWierzcholka, i] != -1)
                     parzyste++;
                 else
-                    nieparzyste++;
+                    if(stopien % 2 == 1 && Macierz[numerWierzcholka, i] != -1)
+                        nieparzyste++;
                 i = 0;
                 stopien = 0;
                 numerWierzcholka++;
@@ -183,8 +184,8 @@ namespace Grafy
                     }
                     i++;
                 }
-
-                ciagStopni.Add(stopien);
+                if(Macierz[numerWierzcholka, i] != -1)
+                    ciagStopni.Add(stopien);
                
                 i = 0;
                 stopien = 0;
