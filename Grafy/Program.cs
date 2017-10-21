@@ -204,17 +204,38 @@ namespace Grafy
 
         public void podgrafIzomorficzny()
         {
-            int[,] MacierzDo2;
-            MacierzDo2 = new int[32, 32];
-            for(int i = 0; i<rozmiar; i++)
+           
+            int[,] matrixIloczyn = new int[rozmiar, rozmiar];
+            bool jest =  false;
+            for (int i = 0; i < rozmiar; i++)
             {
-                for(int q = 0; q < rozmiar; q++)
+                for (int j = 0; j < rozmiar; j++)
                 {
-                   // MacierzDo2[i,q]=Macierz[i,q]
+                    int w = 0;
+                    for (int k = 0; k < rozmiar; k++)
+                    {
+                        if (Macierz[i, k] != -1 && Macierz[k, j] != -1)
+                        {
+                            w += Macierz[i, k] * Macierz[k, j];
+                        }
+                       
+                       
+                           
+                        
+                    }
+                    if (Macierz[i, j] == -1)
+                        matrixIloczyn[i, j] = -1;
+                    else
+                        matrixIloczyn[i, j] = w;
+                    if (matrixIloczyn[i, j] != 0 && Macierz[i, j] == 1)
+                    {
+                        jest = true;
+                    }
+                        
                 }
 
             }
-
+            Console.WriteLine(jest);
         }
         public void sprCiagGrafowy()
         {
@@ -300,6 +321,7 @@ namespace Grafy
                 Console.WriteLine("8-Wszaczenie ilości wierzchołków parzdystego i nie parzystego stopnia");
                 Console.WriteLine("9-Wypisanie Ciągu stopni wierzchołków");
                 Console.WriteLine("10-Sprawdź czy ciąg liczb naturalnych jest ciągiem grafowym");
+                Console.WriteLine("11-Sprawdź czy graf zawiera podgraf izomorwiczny do C3");
                 Console.WriteLine("0-Koniec");
 
 
@@ -350,6 +372,9 @@ namespace Grafy
                         break;
                     case 10:
                         graf.sprCiagGrafowy();
+                        break;
+                    case 11:
+                        graf.podgrafIzomorficzny();
                         break;
                     default:
                         Console.WriteLine("Zły wybór");
