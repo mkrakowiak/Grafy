@@ -245,7 +245,7 @@ namespace Grafy
                     q = (int)ciagStopni[m];
                     ciagStopni[m] = 0;
                     
-                    while (q == m)
+                    while (q == 0)
                     {
                         ciagStopni[m+q] =(int) ciagStopni[m+q] - 1;
 
