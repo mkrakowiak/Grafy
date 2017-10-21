@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -163,7 +164,40 @@ namespace Grafy
             }
             Console.WriteLine("Liczba wierzchołków o parzystym stopniu = " + parzyste + " Liczba wierzchołków o nieparzystym stopniu = " + nieparzyste);
         }
+        public void ciagStopniWierzcholkow()
+        {
+            int stopien = 0;
+            int numerWierzcholka = 0;
+            int i = 0;
+            ArrayList ciagStopni = new ArrayList();
 
+            while (numerWierzcholka < rozmiar)
+            {
+
+                while (i < rozmiar)
+                {
+
+                    if (Macierz[numerWierzcholka, i] != -1 && Macierz[numerWierzcholka, i] == 1)
+                    {
+                        stopien++;
+                    }
+                    i++;
+                }
+
+                ciagStopni.Add(stopien);
+               
+                i = 0;
+                stopien = 0;
+                numerWierzcholka++;
+            }
+            ciagStopni.Sort();
+            ciagStopni.Reverse();
+            Console.WriteLine("Ciąg stopni wierzchołków to: ");
+            foreach (int element in ciagStopni)
+            {
+                Console.Write(element + " ");
+            }
+        }
     }
 
 
@@ -188,6 +222,7 @@ namespace Grafy
                 Console.WriteLine("6-Maksymalny stopień grafu");
                 Console.WriteLine("7-Minimalny stopień grafu");
                 Console.WriteLine("8-Wszaczenie ilości wierzchołków parzdystego i nie parzystego stopnia");
+                Console.WriteLine("9-Wypisanie Ciągu stopni wierzchołków");
                 Console.WriteLine("0-Koniec");
 
 
@@ -232,6 +267,9 @@ namespace Grafy
                         break;
                     case 8:
                         graf.parzystyNieparzystyStopien();
+                        break;
+                    case 9:
+                        graf.ciagStopniWierzcholkow();
                         break;
                     default:
                         Console.WriteLine("Zły wybór");
