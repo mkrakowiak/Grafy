@@ -111,7 +111,7 @@ namespace Grafy
             }
             Console.WriteLine("Max = " + maxStopien);
         }
-        public void minStopien()
+        public int minStopien()
         {
             int stopien = 0;
             int numerWierzcholka = 0;
@@ -134,7 +134,8 @@ namespace Grafy
                 i = 0;
                 numerWierzcholka++;
             }
-            Console.WriteLine("Min = " + minStopien);
+            return minStopien;
+          //  Console.WriteLine("Min = " + minStopien);
         }
         public void parzystyNieparzystyStopien()
         {
@@ -333,7 +334,62 @@ namespace Grafy
             }
 
         }
+        
+        public void cykl()
+        {
 
+            //zrobić cofanie
+            int i = 0;
+            int w = 0;
+            bool cykl = false;
+            int q = 0;
+            bool kolejny = false;
+            int poczatek;
+            ArrayList odwiedzone = new ArrayList();
+            while (w < rozmiar && cykl == false)
+            {
+                poczatek = w;
+                odwiedzone.Clear();
+                odwiedzone.Add(poczatek);
+                while (i < rozmiar && cykl == false)
+                {
+                    if (Macierz[i, i] != -1)
+                    {
+                        
+                        while (kolejny == false && q < rozmiar)
+                        {
+                            if (Macierz[i, q] == 1 && (odwiedzone.Contains(q) == false || (odwiedzone.Count> this.minStopien() && q == poczatek) ))
+                            {
+                                
+                                kolejny = true;
+                                odwiedzone.Add(q);
+                                i = q;
+                                if(q == poczatek && odwiedzone.Count > this.minStopien())
+                                {
+                                    cykl = true;
+                                }
+
+                            }
+                            if (q == rozmiar)
+                                i++;
+                            q++;
+                            
+                        }
+                        kolejny = false;
+                        q = 0;
+
+                    }
+
+                    
+                }
+                w++;
+            }
+
+            foreach(int element in odwiedzone)
+            {
+                Console.Write("-> " + element);
+            }
+        }
 
 
         class Program
@@ -416,6 +472,9 @@ namespace Grafy
                             break;
                         case 12:
                             graf.jordan();
+                            break;
+                        case 13:
+                            graf.cykl();
                             break;
                         default:
                             Console.WriteLine("Zły wybór");
