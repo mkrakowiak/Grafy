@@ -344,6 +344,7 @@ namespace Grafy
             int q = 0;
             bool kolejny = false;
             int poczatek;
+            int stareI = 0;
             bool sprawdzenie = false;
             ArrayList odwiedzone = new ArrayList();
             while (w < rozmiar && cykl == false)
@@ -354,9 +355,10 @@ namespace Grafy
                 odwiedzone.Add(poczatek);
                 sprawdzenie = false;
                 i = w;
+
                 while (i < rozmiar && cykl == false && sprawdzenie == false )
                 {
-                    
+                    stareI = i;
                   
                     if (Macierz[i, i] != -1)
                     {
@@ -383,9 +385,9 @@ namespace Grafy
                             
                         }
                         kolejny = false;
-                        if (q >= rozmiar)
+                        if (i == stareI)
                             sprawdzenie = true;
-                        q = w;
+                        q =w;
 
                     }
 
