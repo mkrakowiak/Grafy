@@ -301,7 +301,7 @@ namespace Grafy
         }
         public void jordan()
         {
-            ArrayList ciagStopni = new ArrayList();
+            ArrayList odblokowane = new ArrayList();
             
             int pomRozmiar = rozmiar;
             
@@ -309,20 +309,18 @@ namespace Grafy
             
             while (pomRozmiar>2)
             {
-               
-                for (int i = 0; i < rozmiar; i++)
+                for( int w = 0; w < rozmiar; w++)
                 {
-                   
+                    if (this.policzStopien(w) == 1)
+                        odblokowane.Add(w);
 
-                        if (this.policzStopien(i) == 1)
-                        {
-                            
-                            this.usunWierzcholek(i);
-                            pomRozmiar--;
-                        }
-                    
                 }
-                
+                foreach(int licznik in odblokowane)
+                {                                                                   
+                            this.usunWierzcholek(licznik);
+                            pomRozmiar--;                                         
+                }
+                odblokowane.Clear();
                 q++;
             }
            for(q=0; q < rozmiar; q++)
