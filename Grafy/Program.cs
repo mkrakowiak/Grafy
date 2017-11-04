@@ -312,9 +312,7 @@ namespace Grafy
                
                 for (int i = 0; i < rozmiar; i++)
                 {
-                    if (pomRozmiar > 2)
-                                                                                      
-                    {
+                   
 
                         if (this.policzStopien(i) == 1)
                         {
@@ -322,7 +320,7 @@ namespace Grafy
                             this.usunWierzcholek(i);
                             pomRozmiar--;
                         }
-                    }
+                    
                 }
                 
                 q++;
@@ -532,6 +530,20 @@ namespace Grafy
                             graf.dodajKrawedz(21, 18);
                             graf.dodajKrawedz(18, 20);
                             graf.dodajKrawedz(21, 19);
+
+                            break;
+                        case 15:
+                            for (int q = 0; q < 7; q++)
+                                graf.dodajWierzcholek();
+                            graf.dodajKrawedz(0, 1);
+                            graf.dodajKrawedz(2, 0);
+                            graf.dodajKrawedz(3, 0);
+                            graf.dodajKrawedz(1, 4);
+                            graf.dodajKrawedz(1, 5);
+                            graf.dodajKrawedz(5, 6);
+
+
+
 
                             break;
                         default:
