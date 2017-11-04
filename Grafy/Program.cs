@@ -307,12 +307,12 @@ namespace Grafy
             
             int q = 0;
             
-            while (pomRozmiar>3)
+            while (pomRozmiar>2)
             {
                
                 for (int i = 0; i < rozmiar; i++)
                 {
-                    if (pomRozmiar != 1)
+                    if (pomRozmiar > 2)
                                                                                       
                     {
 
