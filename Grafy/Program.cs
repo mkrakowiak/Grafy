@@ -338,26 +338,32 @@ namespace Grafy
         public void cykl()
         {
 
-            //zrobić cofanie
             int i = 0;
             int w = 0;
             bool cykl = false;
             int q = 0;
             bool kolejny = false;
             int poczatek;
+            bool sprawdzenie = false;
             ArrayList odwiedzone = new ArrayList();
             while (w < rozmiar && cykl == false)
             {
+              
                 poczatek = w;
                 odwiedzone.Clear();
                 odwiedzone.Add(poczatek);
-                while (i < rozmiar && cykl == false)
+                sprawdzenie = false;
+                i = w;
+                while (i < rozmiar && cykl == false && sprawdzenie == false )
                 {
+                    
+                  
                     if (Macierz[i, i] != -1)
                     {
                         
                         while (kolejny == false && q < rozmiar)
                         {
+                            Console.WriteLine("q="+ q);
                             if (Macierz[i, q] == 1 && (odwiedzone.Contains(q) == false || (odwiedzone.Count> this.minStopien() && q == poczatek) ))
                             {
                                 
@@ -374,9 +380,12 @@ namespace Grafy
                                 i++;
                             q++;
                             
+                            
                         }
                         kolejny = false;
-                        q = 0;
+                        if (q >= rozmiar)
+                            sprawdzenie = true;
+                        q = w;
 
                     }
 
@@ -416,6 +425,9 @@ namespace Grafy
                     Console.WriteLine("9-Wypisanie Ciągu stopni wierzchołków");
                     Console.WriteLine("10-Sprawdź czy ciąg liczb naturalnych jest ciągiem grafowym");
                     Console.WriteLine("11-Sprawdź czy graf zawiera podgraf izomorwiczny do C3");
+                    Console.WriteLine("12-Algorytm Jordana");
+                    Console.WriteLine("13-Szukanie cylku");
+                    Console.WriteLine("14-Test case");
                     Console.WriteLine("0-Koniec");
 
 
@@ -475,6 +487,50 @@ namespace Grafy
                             break;
                         case 13:
                             graf.cykl();
+                            break;
+                        case 14:
+                            for(int i = 0; i < 22; i++)
+                            {
+                                graf.dodajWierzcholek();
+                            }
+                            graf.dodajKrawedz(0,1);
+                            graf.dodajKrawedz(0,2);
+                            graf.dodajKrawedz(1,2);
+                            graf.dodajKrawedz(1,6);
+                            
+                            graf.dodajKrawedz(6, 5);
+                            graf.dodajKrawedz(5, 4);
+                            graf.dodajKrawedz(3, 4);
+                            graf.dodajKrawedz(6, 3);
+                            graf.dodajKrawedz(6, 4);
+                            graf.dodajKrawedz(5, 3);
+                            graf.dodajKrawedz(2, 7);
+                            graf.dodajKrawedz(7, 8);
+                            graf.dodajKrawedz(8, 9);
+                            graf.dodajKrawedz(9, 10);
+                            graf.dodajKrawedz(7, 10);
+                            graf.dodajKrawedz(7, 9);
+                            graf.dodajKrawedz(10, 8);
+                            
+                            graf.dodajKrawedz(0, 11);
+                            graf.dodajKrawedz(11, 12);
+                            graf.dodajKrawedz(12, 13);
+                            graf.dodajKrawedz(13, 11);
+                            graf.dodajKrawedz(13, 14);
+                            graf.dodajKrawedz(14, 15);
+                            graf.dodajKrawedz(15, 16);
+                            graf.dodajKrawedz(16, 17);
+                            graf.dodajKrawedz(17, 14);
+                            graf.dodajKrawedz(16, 14);
+                            graf.dodajKrawedz(15, 17);
+                            graf.dodajKrawedz(12, 18);
+                            graf.dodajKrawedz(18, 19);
+                            graf.dodajKrawedz(19, 20);
+                            graf.dodajKrawedz(20, 21);
+                            graf.dodajKrawedz(21, 18);
+                            graf.dodajKrawedz(18, 20);
+                            graf.dodajKrawedz(21, 19);
+
                             break;
                         default:
                             Console.WriteLine("Zły wybór");
