@@ -481,6 +481,9 @@ namespace Grafy
                     Console.WriteLine("12-Algorytm Jordana");
                     Console.WriteLine("13-Szukanie cylku");
                     Console.WriteLine("14-Test case");
+                    Console.WriteLine("16-DFS");
+                    Console.WriteLine("17-DFS-test case");
+                    Console.WriteLine("18-DFS-test case2(tablica)");
                     Console.WriteLine("0-Koniec");
 
 
