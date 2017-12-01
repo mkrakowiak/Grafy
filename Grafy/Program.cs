@@ -397,7 +397,62 @@ namespace Grafy
                 Console.Write("-> " + element);
             }
         }
+        public static void PrintValues(IEnumerable myCollection)
+        {
+            foreach (Object obj in myCollection)
+                Console.Write("    {0}", obj);
+            Console.WriteLine();
+        }
 
+        public void dfs()
+        {
+            ArrayList odwiedzone = new ArrayList();
+            int aktualnyWierzcholek = 0;
+            Stack myStack = new Stack();            
+            myStack.Push(0);
+           // odwiedzone.Add(0);
+            bool dalej = true;
+            bool jesliSlepy=false;
+            int q = 0;
+            
+            while (myStack.Count != 0)
+            {
+              
+                if (jesliSlepy)
+                {
+                    aktualnyWierzcholek = (int)myStack.Peek();
+                    jesliSlepy = false;
+                }
+                else
+                {
+                    odwiedzone.Add(q);
+                    aktualnyWierzcholek = q;
+                }
+                q = 0;
+                dalej = true;
+                while (dalej)
+                {
+                    if(Macierz[aktualnyWierzcholek, q]==1 && odwiedzone.Contains(q)==false)
+                    {
+                        myStack.Push(q);                     
+                        dalej = false;                       
+                        Console.WriteLine("{0},{1}", aktualnyWierzcholek, myStack.Peek());
+                    }
+                    else
+                        if (q == rozmiar - 1)
+                        {
+                            myStack.Pop();
+                            jesliSlepy = true;
+                            dalej = false;
+                        }
+                    if(dalej==true)
+                        q++;
+                    
+                }
+
+            }
+        
+        }
 
         class Program
         {
@@ -486,6 +541,7 @@ namespace Grafy
                         case 13:
                             graf.cykl();
                             break;
+                        
                         case 14:
                             for(int i = 0; i < 22; i++)
                             {
@@ -541,6 +597,37 @@ namespace Grafy
                             graf.dodajKrawedz(5, 6);
 
 
+
+
+                            break;
+                        case 16:
+                            graf.dfs();
+                            break;
+                        case 17:
+                            for (int q = 0; q < 6; q++)
+                                graf.dodajWierzcholek();
+                            graf.dodajKrawedz(0, 1);
+                            graf.dodajKrawedz(1, 2);
+                            graf.dodajKrawedz(2, 5);
+                            graf.dodajKrawedz(1, 3);
+                            graf.dodajKrawedz(3, 4);
+                            
+                            break;
+                        case 18:
+                            for (int q = 0; q < 9; q++)
+                                graf.dodajWierzcholek();
+                            graf.dodajKrawedz(0, 1);
+                            graf.dodajKrawedz(0, 3);
+                            graf.dodajKrawedz(3, 7);
+                            graf.dodajKrawedz(7, 1);
+                            graf.dodajKrawedz(0, 7);
+                            graf.dodajKrawedz(7, 2);
+                            graf.dodajKrawedz(7, 4);
+                            graf.dodajKrawedz(7, 5);
+                            graf.dodajKrawedz(4, 5);
+                            graf.dodajKrawedz(5, 8);
+                            graf.dodajKrawedz(8, 6);
+                            graf.dodajKrawedz(6, 5);
 
 
                             break;
