@@ -506,6 +506,8 @@ namespace Grafy
                     Console.WriteLine("16-DFS");
                     Console.WriteLine("17-DFS-test case");
                     Console.WriteLine("18-DFS-test case2(tablica)");
+                    Console.WriteLine("Sprawdź czy graf jest spójny");
+                    Console.WriteLine("test case Spr czy graf jest spójny");
                     Console.WriteLine("0-Koniec");
 
 
