@@ -460,6 +460,7 @@ namespace Grafy
             bool nieJestSpojny = false;
             ArrayList odwiedzone = new ArrayList();
             odwiedzone=this.dfs();
+            ArrayList tmp = new ArrayList();
             int licznikSkladowa = 1;
             for(int i = 0; i < rozmiar; i++)
             {
@@ -467,7 +468,11 @@ namespace Grafy
                 {
                     licznikSkladowa++;
                     nieJestSpojny = true;              
-                    odwiedzone=this.dfs(i,licznikSkladowa);
+                    tmp=this.dfs(i,licznikSkladowa);
+                    foreach(int element in tmp)
+                    {
+                        odwiedzone.Add(element);
+                    }
                 }
             }
             if (nieJestSpojny)
