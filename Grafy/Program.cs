@@ -404,17 +404,18 @@ namespace Grafy
             Console.WriteLine();
         }
 
-        public void dfs()
+        public ArrayList dfs(int poczatek = 0, int licznikSkladowych = 1)
         {
             ArrayList odwiedzone = new ArrayList();
-            int aktualnyWierzcholek = 0;
+            int aktualnyWierzcholek = poczatek;
             Stack myStack = new Stack();            
-            myStack.Push(0);
+            myStack.Push(poczatek);
            // odwiedzone.Add(0);
             bool dalej = true;
             bool jesliSlepy=false;
-            int q = 0;
-            
+            int q = poczatek;
+
+            Console.WriteLine("Składowa" + licznikSkladowych);
             while (myStack.Count != 0)
             {
               
@@ -449,9 +450,30 @@ namespace Grafy
                         q++;
                     
                 }
-
+                
             }
-        
+            Console.WriteLine();
+            return odwiedzone;
+        }
+        public void czySpojny()
+        {
+            bool nieJestSpojny = false;
+            ArrayList odwiedzone = new ArrayList();
+            odwiedzone=this.dfs();
+            int licznikSkladowa = 1;
+            for(int i = 0; i < rozmiar; i++)
+            {
+                if (odwiedzone.Contains(i) == false)
+                {
+                    licznikSkladowa++;
+                    nieJestSpojny = true;              
+                    odwiedzone=this.dfs(i,licznikSkladowa);
+                }
+            }
+            if (nieJestSpojny)
+                Console.WriteLine("Graf nie jest spójny");
+            else
+                Console.WriteLine("Graf jest spójny");
         }
 
         class Program
@@ -634,6 +656,27 @@ namespace Grafy
 
 
                             break;
+                        case 19:
+                            graf.czySpojny();
+                            break;
+                        case 20:
+                            for (int q = 0; q < 10; q++)
+                                graf.dodajWierzcholek();
+                            graf.dodajKrawedz(0, 4);
+                            graf.dodajKrawedz(4, 1);
+                            graf.dodajKrawedz(1, 2);
+                            graf.dodajKrawedz(2, 3);
+                            graf.dodajKrawedz(3, 1);
+                            graf.dodajKrawedz(6, 5);
+                            graf.dodajKrawedz(5, 7);
+                            graf.dodajKrawedz(7, 6);
+                          
+                            graf.dodajKrawedz(8, 9);
+                          
+
+
+                            break;
+
                         default:
                             Console.WriteLine("Zły wybór");
                             break;
