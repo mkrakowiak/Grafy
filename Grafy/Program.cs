@@ -462,16 +462,22 @@ namespace Grafy
             odwiedzone=this.dfs();
             ArrayList tmp = new ArrayList();
             int licznikSkladowa = 1;
-            for(int i = 0; i < rozmiar; i++)
+        //    foreach (int element in odwiedzone)
+          //  {
+           //     Console.WriteLine("{0}", element);
+           // }
+            for (int i = 0; i < rozmiar; i++)
             {
                 if (odwiedzone.Contains(i) == false)
                 {
                     licznikSkladowa++;
                     nieJestSpojny = true;              
                     tmp=this.dfs(i,licznikSkladowa);
+                    
                     foreach(int element in tmp)
                     {
                         odwiedzone.Add(element);
+             //           Console.WriteLine("{0}", element);
                     }
                 }
             }
