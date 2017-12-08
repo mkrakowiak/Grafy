@@ -437,7 +437,7 @@ namespace Grafy
                     {
                         myStack.Push(q);                     
                         dalej = false;                       
-                        Console.WriteLine("{0},{1}", aktualnyWierzcholek, myStack.Peek());
+                       // Console.WriteLine("{0},{1}", aktualnyWierzcholek, myStack.Peek());
                     }
                     else
                         if (q == rozmiar - 1)
@@ -462,10 +462,10 @@ namespace Grafy
             odwiedzone=this.dfs();
             ArrayList tmp = new ArrayList();
             int licznikSkladowa = 1;
-        //    foreach (int element in odwiedzone)
-          //  {
-           //     Console.WriteLine("{0}", element);
-           // }
+            foreach (int element in odwiedzone)
+            {
+                Console.WriteLine("{0}", element);
+           }
             for (int i = 0; i < rozmiar; i++)
             {
                 if (odwiedzone.Contains(i) == false)
@@ -477,7 +477,7 @@ namespace Grafy
                     foreach(int element in tmp)
                     {
                         odwiedzone.Add(element);
-             //           Console.WriteLine("{0}", element);
+                        Console.WriteLine("{0}", element);
                     }
                 }
             }
