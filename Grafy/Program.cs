@@ -10,14 +10,45 @@ namespace Grafy
     class Grafy
     {
         int[,] Macierz;
+        int[,] MacierzWagi;
         int rozmiar = 0;
         public Grafy()
         {
             Macierz = new int[32, 32];
+            MacierzWagi = new int[32, 32];
             for (int q = 0; q < 32; q++)
             {
                 for (int k = 0; k < 32; k++)
+                {
                     Macierz[q, k] = -1;
+                    MacierzWagi[q, k] = 0;
+
+                }
+                    
+
+            }
+
+
+        }
+        public void transpozycja()
+        {
+            int[,] transpozycjaTmp;
+            transpozycjaTmp = new int[rozmiar, rozmiar];
+            for (int q = 0; q < rozmiar; q++)
+            {
+                for (int k = 0; k < rozmiar; k++)
+                {
+                    transpozycjaTmp[q, k] = Macierz[k, q];
+                    Macierz[k, q] = 0;
+                }
+
+            }
+            for (int q = 0; q < rozmiar; q++)
+            {
+                for (int k = 0; k < rozmiar; k++)
+                {
+                    Macierz[q, k] = transpozycjaTmp[q, k];
+                }
 
             }
 
@@ -53,6 +84,18 @@ namespace Grafy
             }
             else
                 Console.WriteLine("Krawędź już istnieje");
+        }
+
+        public void dodajWage(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka, int waga)
+        {
+            if (Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] == 1)
+            {
+                MacierzWagi[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = waga;
+                MacierzWagi[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = waga;
+            }
+            else
+                Console.WriteLine("Krawędź nie istnieje");
+
         }
 
         public void usunKrawedz(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka)
@@ -394,7 +437,8 @@ namespace Grafy
 
             foreach(int element in odwiedzone)
             {
-                Console.Write("-> " + element);
+                // Console.Write("-> " + element);
+                
             }
         }
         public static void PrintValues(IEnumerable myCollection)
@@ -404,9 +448,11 @@ namespace Grafy
             Console.WriteLine();
         }
 
+        //zwracania zrzuconych ze stosus
         public ArrayList dfs(int poczatek = 0, int licznikSkladowych = 1)
         {
             ArrayList odwiedzone = new ArrayList();
+            ArrayList listaWyrzuconychZeStosu = new ArrayList();
             int aktualnyWierzcholek = poczatek;
             Stack myStack = new Stack();            
             myStack.Push(poczatek);
@@ -442,7 +488,7 @@ namespace Grafy
                     else
                         if (q == rozmiar - 1)
                         {
-                            myStack.Pop();
+                            listaWyrzuconychZeStosu.Add(myStack.Pop());
                             jesliSlepy = true;
                             dalej = false;
                         }
@@ -453,7 +499,7 @@ namespace Grafy
                 
             }
             Console.WriteLine();
-            return odwiedzone;
+            return listaWyrzuconychZeStosu;
         }
         public void czySpojny()
         {
@@ -487,13 +533,63 @@ namespace Grafy
                 Console.WriteLine("Graf jest spójny");
         }
 
+    public void kosaraju()
+        {
+            ArrayList listaWyrzuconychZeStosu = new ArrayList();
+            listaWyrzuconychZeStosu = this.dfs();
+            this.transpozycja();
+            while (listaWyrzuconychZeStosu.Count == 0)
+            {
+
+            }
+
+        }
+
+        
+        public void kruskal()
+        {
+            int min =1000000;
+            int numerPierwszego=-1;
+            int numerDrugiego=-1;
+            int[,] Owiedzone;
+            ArrayList odwiedzoneLista = new ArrayList();
+            Owiedzone = new int[rozmiar, rozmiar];
+           // Owiedzone[0, 0] = 1;
+            while (odwiedzoneLista.Count!=rozmiar-2) {
+                for (int q = 0; q < rozmiar; q++)
+                {
+                    for (int k = 0; k < rozmiar; k++)
+                    {
+                        if (min >= MacierzWagi[q, k] && Owiedzone[q, k] == 0 && q!=k && Macierz[q,k]==1)
+                        {
+                            min = MacierzWagi[q, k];
+                            numerPierwszego = q;
+                            numerDrugiego = k;
+                            odwiedzoneLista.Add(numerDrugiego);
+                            Console.WriteLine(min);
+                        }
+                    }
+                   
+                }
+                Console.WriteLine("{0},{1}", numerPierwszego, numerDrugiego);
+                Owiedzone[numerPierwszego, numerDrugiego] = 1;
+                Owiedzone[numerDrugiego, numerPierwszego] = 1;
+                MacierzWagi[numerPierwszego, numerDrugiego]=10000;
+                MacierzWagi[numerDrugiego, numerPierwszego] = 10000;
+
+
+            }
+
+
+        }
+
         class Program
         {
             static void Main(string[] args)
             {
                 int numerPierwszegoWierzchołka;
                 int numerDrugiegoWierzchołka;
-
+                int waga;
                 int caseSwitch = 1;
                 Grafy graf = new Grafy();
 
@@ -687,6 +783,37 @@ namespace Grafy
                             graf.dodajKrawedz(8, 9);
                           
 
+
+                            break;
+                        case 21:
+                            graf.kosaraju();
+                            break;
+
+                        case 22:
+                            Console.WriteLine("Podaj pierwszy wierzchołek");
+                            numerPierwszegoWierzchołka = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Podaj drugi wierzchołek");
+                            numerDrugiegoWierzchołka = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Podaj wage");
+                            waga = Convert.ToInt32(Console.ReadLine());
+                            graf.dodajWage(numerPierwszegoWierzchołka, numerDrugiegoWierzchołka,waga);
+                            break;
+                        case 23:
+                            graf.kruskal();
+                            break;
+                        case 24:
+                            for (int q = 0; q < 5; q++)
+                                graf.dodajWierzcholek();
+                            graf.dodajKrawedz(0, 1);
+                            graf.dodajKrawedz(0, 2);
+                            graf.dodajKrawedz(2, 3);
+                            graf.dodajKrawedz(3, 4);
+
+                            graf.dodajWage(0, 1, 5);
+                            graf.dodajWage(0, 2,6);
+                            
+                            graf.dodajWage(2, 3,7);
+                            graf.dodajWage(3, 4,4);
 
                             break;
 
