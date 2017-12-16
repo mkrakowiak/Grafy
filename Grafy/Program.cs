@@ -683,7 +683,9 @@ namespace Grafy
                     Console.WriteLine("18-DFS-test case2(tablica)");
                     Console.WriteLine("19-Sprawdź czy graf jest spójny");
                     Console.WriteLine("20-test case Spr czy graf jest spójny");
-                    Console.WriteLine("0-Koniec");
+                    Console.WriteLine("25-test case Dijkstra");
+                    Console.WriteLine("26-Dijkstra");
+                Console.WriteLine("0-Koniec");
 
 
 
@@ -910,7 +912,9 @@ namespace Grafy
                         graf.dodajWage(4, 1,3);
                         break;
                     case 26:
-                        graf.Dijkstra(5);
+                        Console.WriteLine("Podaj wierzchołek do liczenia odległości");
+                        numerPierwszegoWierzchołka = Convert.ToInt32(Console.ReadLine());
+                        graf.Dijkstra(numerPierwszegoWierzchołka);
                         break;
                         default:
                             Console.WriteLine("Zły wybór");
