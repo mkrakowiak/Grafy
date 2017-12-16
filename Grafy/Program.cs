@@ -590,16 +590,23 @@ namespace Grafy
             Tabela = new int[this.rozmiar, this.rozmiar];
             ArrayList odwiedzoneLista = new ArrayList();
             int min = 90000000;
+            
             for (int i = 0; i < rozmiar; i++)
             {
-                for (int q = 1; q < rozmiar; q++)
+                for (int q = 0; q < rozmiar; q++)
                 {
                     if (i == 0)
                     {
-                        if (this.Macierz[i, q] == 1)
-                            Tabela[i, q] = this.MacierzWagi[i, q];
+                        if (q == wierzcholek)
+                        {
+                            Tabela[i, q] = 0;
+                        }
+                        else
+                        if (this.Macierz[wierzcholek, q] == 1)
+                            Tabela[i, q] = this.MacierzWagi[wierzcholek, q];
                         else
                             Tabela[i, q] = 100000;
+
                     }
                     else
                     {
@@ -622,10 +629,10 @@ namespace Grafy
 
                 }
                 int pom=-1;
-                for (int k = 1; k < rozmiar; k++)
+                for (int k = 0; k < rozmiar; k++)
                 {
                     
-                        if (Tabela[i, k] < min && odwiedzoneLista.Contains(k)==false)
+                        if (Tabela[i, k] < min && odwiedzoneLista.Contains(k)==false && k!=wierzcholek)
                     {
 
 
@@ -903,7 +910,7 @@ namespace Grafy
                         graf.dodajWage(4, 1,3);
                         break;
                     case 26:
-                        graf.Dijkstra();
+                        graf.Dijkstra(5);
                         break;
                         default:
                             Console.WriteLine("Zły wybór");
