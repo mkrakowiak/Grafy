@@ -606,7 +606,6 @@ namespace Grafy
                             Tabela[i, q] = this.MacierzWagi[wierzcholek, q];
                         else
                             Tabela[i, q] = 100000;
-
                     }
                     else
                     {
@@ -616,26 +615,18 @@ namespace Grafy
                             {
                                 Tabela[i, q] = this.MacierzWagi[(int)odwiedzoneLista[odwiedzoneLista.Count - 1], q] + Tabela[i - 1, (int)odwiedzoneLista[odwiedzoneLista.Count - 1]];
                             }
-                            else
-                                
-                            
-                                Tabela[i, q] = Tabela[i - 1, q];
-                            
-                            
+                            else                           
+                                Tabela[i, q] = Tabela[i - 1, q];                          
                         }
                         else
                             Tabela[i, q] = Tabela[i - 1, q];
                     }
-
                 }
                 int pom=-1;
                 for (int k = 0; k < rozmiar; k++)
-                {
-                    
+                {         
                         if (Tabela[i, k] < min && odwiedzoneLista.Contains(k)==false && k!=wierzcholek)
                     {
-
-
                         min = Tabela[i, k];
                         pom = k;
                     }
