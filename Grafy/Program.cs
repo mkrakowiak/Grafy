@@ -24,7 +24,7 @@ namespace Grafy
                     MacierzWagi[q, k] = 0;
 
                 }
-                    
+
 
             }
 
@@ -178,7 +178,7 @@ namespace Grafy
                 numerWierzcholka++;
             }
             return minStopien;
-          //  Console.WriteLine("Min = " + minStopien);
+            //  Console.WriteLine("Min = " + minStopien);
         }
         public void parzystyNieparzystyStopien()
         {
@@ -345,35 +345,35 @@ namespace Grafy
         public void jordan()
         {
             ArrayList odblokowane = new ArrayList();
-            
+
             int pomRozmiar = rozmiar;
-            
+
             int q = 0;
-            
-            while (pomRozmiar>2)
+
+            while (pomRozmiar > 2)
             {
-                for( int w = 0; w < rozmiar; w++)
+                for (int w = 0; w < rozmiar; w++)
                 {
                     if (this.policzStopien(w) == 1)
                         odblokowane.Add(w);
 
                 }
-                foreach(int licznik in odblokowane)
-                {                                                                   
-                            this.usunWierzcholek(licznik);
-                            pomRozmiar--;                                         
+                foreach (int licznik in odblokowane)
+                {
+                    this.usunWierzcholek(licznik);
+                    pomRozmiar--;
                 }
                 odblokowane.Clear();
                 q++;
             }
-           for(q=0; q < rozmiar; q++)
+            for (q = 0; q < rozmiar; q++)
             {
-                 if (Macierz[q, q] != -1)
-                Console.WriteLine("numer " + q);
+                if (Macierz[q, q] != -1)
+                    Console.WriteLine("numer " + q);
             }
 
         }
-        
+
         public void cykl()
         {
 
@@ -388,30 +388,30 @@ namespace Grafy
             ArrayList odwiedzone = new ArrayList();
             while (w < rozmiar && cykl == false)
             {
-              
+
                 poczatek = w;
                 odwiedzone.Clear();
                 odwiedzone.Add(poczatek);
                 sprawdzenie = false;
                 i = w;
 
-                while (i < rozmiar && cykl == false && sprawdzenie == false )
+                while (i < rozmiar && cykl == false && sprawdzenie == false)
                 {
                     stareI = i;
-                  
+
                     if (Macierz[i, i] != -1)
                     {
-                        
+
                         while (kolejny == false && q < rozmiar)
                         {
-                            Console.WriteLine("q="+ q);
-                            if (Macierz[i, q] == 1 && (odwiedzone.Contains(q) == false || (odwiedzone.Count> this.minStopien() && q == poczatek) ))
+                            Console.WriteLine("q=" + q);
+                            if (Macierz[i, q] == 1 && (odwiedzone.Contains(q) == false || (odwiedzone.Count > this.minStopien() && q == poczatek)))
                             {
-                                
+
                                 kolejny = true;
                                 odwiedzone.Add(q);
                                 i = q;
-                                if(q == poczatek && odwiedzone.Count > this.minStopien())
+                                if (q == poczatek && odwiedzone.Count > this.minStopien())
                                 {
                                     cykl = true;
                                 }
@@ -420,25 +420,25 @@ namespace Grafy
                             if (q == rozmiar)
                                 i++;
                             q++;
-                            
-                            
+
+
                         }
                         kolejny = false;
                         if (i == stareI)
                             sprawdzenie = true;
-                        q =w;
+                        q = w;
 
                     }
 
-                    
+
                 }
                 w++;
             }
 
-            foreach(int element in odwiedzone)
+            foreach (int element in odwiedzone)
             {
                 // Console.Write("-> " + element);
-                
+
             }
         }
         public static void PrintValues(IEnumerable myCollection)
@@ -454,17 +454,17 @@ namespace Grafy
             ArrayList odwiedzone = new ArrayList();
             ArrayList listaWyrzuconychZeStosu = new ArrayList();
             int aktualnyWierzcholek = poczatek;
-            Stack myStack = new Stack();            
+            Stack myStack = new Stack();
             myStack.Push(poczatek);
-           // odwiedzone.Add(0);
+            // odwiedzone.Add(0);
             bool dalej = true;
-            bool jesliSlepy=false;
+            bool jesliSlepy = false;
             int q = poczatek;
 
             Console.WriteLine("Składowa" + licznikSkladowych);
             while (myStack.Count != 0)
             {
-              
+
                 if (jesliSlepy)
                 {
                     aktualnyWierzcholek = (int)myStack.Peek();
@@ -479,24 +479,24 @@ namespace Grafy
                 dalej = true;
                 while (dalej)
                 {
-                    if(Macierz[aktualnyWierzcholek, q]==1 && odwiedzone.Contains(q)==false)
+                    if (Macierz[aktualnyWierzcholek, q] == 1 && odwiedzone.Contains(q) == false)
                     {
-                        myStack.Push(q);                     
-                        dalej = false;                       
-                       // Console.WriteLine("{0},{1}", aktualnyWierzcholek, myStack.Peek());
+                        myStack.Push(q);
+                        dalej = false;
+                        // Console.WriteLine("{0},{1}", aktualnyWierzcholek, myStack.Peek());
                     }
                     else
                         if (q == rozmiar - 1)
-                        {
-                            listaWyrzuconychZeStosu.Add(myStack.Pop());
-                            jesliSlepy = true;
-                            dalej = false;
-                        }
-                    if(dalej==true)
+                    {
+                        listaWyrzuconychZeStosu.Add(myStack.Pop());
+                        jesliSlepy = true;
+                        dalej = false;
+                    }
+                    if (dalej == true)
                         q++;
-                    
+
                 }
-                
+
             }
             Console.WriteLine();
             return listaWyrzuconychZeStosu;
@@ -505,22 +505,22 @@ namespace Grafy
         {
             bool nieJestSpojny = false;
             ArrayList odwiedzone = new ArrayList();
-            odwiedzone=this.dfs();
+            odwiedzone = this.dfs();
             ArrayList tmp = new ArrayList();
             int licznikSkladowa = 1;
             foreach (int element in odwiedzone)
             {
                 Console.WriteLine("{0}", element);
-           }
+            }
             for (int i = 0; i < rozmiar; i++)
             {
                 if (odwiedzone.Contains(i) == false)
                 {
                     licznikSkladowa++;
-                    nieJestSpojny = true;              
-                    tmp=this.dfs(i,licznikSkladowa);
-                    
-                    foreach(int element in tmp)
+                    nieJestSpojny = true;
+                    tmp = this.dfs(i, licznikSkladowa);
+
+                    foreach (int element in tmp)
                     {
                         odwiedzone.Add(element);
                         Console.WriteLine("{0}", element);
@@ -533,7 +533,7 @@ namespace Grafy
                 Console.WriteLine("Graf jest spójny");
         }
 
-    public void kosaraju()
+        public void kosaraju()
         {
             ArrayList listaWyrzuconychZeStosu = new ArrayList();
             listaWyrzuconychZeStosu = this.dfs();
@@ -545,22 +545,23 @@ namespace Grafy
 
         }
 
-        
+
         public void kruskal()
         {
-            int min =1000000;
-            int numerPierwszego=-1;
-            int numerDrugiego=-1;
+            int min = 1000000;
+            int numerPierwszego = -1;
+            int numerDrugiego = -1;
             int[,] Owiedzone;
             ArrayList odwiedzoneLista = new ArrayList();
             Owiedzone = new int[rozmiar, rozmiar];
-           // Owiedzone[0, 0] = 1;
-            while (odwiedzoneLista.Count!=rozmiar-2) {
+            // Owiedzone[0, 0] = 1;
+            while (odwiedzoneLista.Count != rozmiar - 2)
+            {
                 for (int q = 0; q < rozmiar; q++)
                 {
                     for (int k = 0; k < rozmiar; k++)
                     {
-                        if (min >= MacierzWagi[q, k] && Owiedzone[q, k] == 0 && q!=k && Macierz[q,k]==1)
+                        if (min >= MacierzWagi[q, k] && Owiedzone[q, k] == 0 && q != k && Macierz[q, k] == 1)
                         {
                             min = MacierzWagi[q, k];
                             numerPierwszego = q;
@@ -569,12 +570,12 @@ namespace Grafy
                             Console.WriteLine(min);
                         }
                     }
-                   
+
                 }
                 Console.WriteLine("{0},{1}", numerPierwszego, numerDrugiego);
                 Owiedzone[numerPierwszego, numerDrugiego] = 1;
                 Owiedzone[numerDrugiego, numerPierwszego] = 1;
-                MacierzWagi[numerPierwszego, numerDrugiego]=10000;
+                MacierzWagi[numerPierwszego, numerDrugiego] = 10000;
                 MacierzWagi[numerDrugiego, numerPierwszego] = 10000;
 
 
@@ -583,6 +584,66 @@ namespace Grafy
 
         }
 
+        public void Dijkstra(int wierzcholek=0)
+        {
+            int[,] Tabela;
+            Tabela = new int[this.rozmiar, this.rozmiar];
+            ArrayList odwiedzoneLista = new ArrayList();
+            int min = 90000000;
+            for (int i = 0; i < rozmiar; i++)
+            {
+                for (int q = 1; q < rozmiar; q++)
+                {
+                    if (i == 0)
+                    {
+                        if (this.Macierz[i, q] == 1)
+                            Tabela[i, q] = this.MacierzWagi[i, q];
+                        else
+                            Tabela[i, q] = 100000;
+                    }
+                    else
+                    {
+                        if (this.Macierz[(int)odwiedzoneLista[odwiedzoneLista.Count-1], q] == 1)
+                        {
+                            if (this.MacierzWagi[(int)odwiedzoneLista[odwiedzoneLista.Count - 1], q] + Tabela[i - 1, (int)odwiedzoneLista[odwiedzoneLista.Count - 1]] < Tabela[i - 1, q])
+                            {
+                                Tabela[i, q] = this.MacierzWagi[(int)odwiedzoneLista[odwiedzoneLista.Count - 1], q] + Tabela[i - 1, (int)odwiedzoneLista[odwiedzoneLista.Count - 1]];
+                            }
+                            else
+                                
+                            
+                                Tabela[i, q] = Tabela[i - 1, q];
+                            
+                            
+                        }
+                        else
+                            Tabela[i, q] = Tabela[i - 1, q];
+                    }
+
+                }
+                int pom=-1;
+                for (int k = 1; k < rozmiar; k++)
+                {
+                    
+                        if (Tabela[i, k] < min && odwiedzoneLista.Contains(k)==false)
+                    {
+
+
+                        min = Tabela[i, k];
+                        pom = k;
+                    }
+                }
+                odwiedzoneLista.Add(pom);
+                min = 900000000;
+                for(int p=0;p<rozmiar;p++)
+                {
+                    Console.Write("{0} ", Tabela[i, p]);
+                }
+                Console.WriteLine();
+            }
+
+        }
+    }
         class Program
         {
             static void Main(string[] args)
@@ -675,17 +736,17 @@ namespace Grafy
                         case 13:
                             graf.cykl();
                             break;
-                        
+
                         case 14:
-                            for(int i = 0; i < 22; i++)
+                            for (int i = 0; i < 22; i++)
                             {
                                 graf.dodajWierzcholek();
                             }
-                            graf.dodajKrawedz(0,1);
-                            graf.dodajKrawedz(0,2);
-                            graf.dodajKrawedz(1,2);
-                            graf.dodajKrawedz(1,6);
-                            
+                            graf.dodajKrawedz(0, 1);
+                            graf.dodajKrawedz(0, 2);
+                            graf.dodajKrawedz(1, 2);
+                            graf.dodajKrawedz(1, 6);
+
                             graf.dodajKrawedz(6, 5);
                             graf.dodajKrawedz(5, 4);
                             graf.dodajKrawedz(3, 4);
@@ -699,7 +760,7 @@ namespace Grafy
                             graf.dodajKrawedz(7, 10);
                             graf.dodajKrawedz(7, 9);
                             graf.dodajKrawedz(10, 8);
-                            
+
                             graf.dodajKrawedz(0, 11);
                             graf.dodajKrawedz(11, 12);
                             graf.dodajKrawedz(12, 13);
@@ -745,7 +806,7 @@ namespace Grafy
                             graf.dodajKrawedz(2, 5);
                             graf.dodajKrawedz(1, 3);
                             graf.dodajKrawedz(3, 4);
-                            
+
                             break;
                         case 18:
                             for (int q = 0; q < 9; q++)
@@ -779,9 +840,9 @@ namespace Grafy
                             graf.dodajKrawedz(6, 5);
                             graf.dodajKrawedz(5, 7);
                             graf.dodajKrawedz(7, 6);
-                          
+
                             graf.dodajKrawedz(8, 9);
-                          
+
 
 
                             break;
@@ -796,7 +857,7 @@ namespace Grafy
                             numerDrugiegoWierzchołka = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Podaj wage");
                             waga = Convert.ToInt32(Console.ReadLine());
-                            graf.dodajWage(numerPierwszegoWierzchołka, numerDrugiegoWierzchołka,waga);
+                            graf.dodajWage(numerPierwszegoWierzchołka, numerDrugiegoWierzchołka, waga);
                             break;
                         case 23:
                             graf.kruskal();
@@ -810,20 +871,49 @@ namespace Grafy
                             graf.dodajKrawedz(3, 4);
 
                             graf.dodajWage(0, 1, 5);
-                            graf.dodajWage(0, 2,6);
-                            
-                            graf.dodajWage(2, 3,7);
-                            graf.dodajWage(3, 4,4);
+                            graf.dodajWage(0, 2, 6);
+
+                            graf.dodajWage(2, 3, 7);
+                            graf.dodajWage(3, 4, 4);
 
                             break;
+                    case 25:
+                        for (int q = 0; q < 6; q++)
+                            graf.dodajWierzcholek();
+                        graf.dodajKrawedz(0, 3);
+                        graf.dodajKrawedz(0, 2);
+                        graf.dodajKrawedz(0, 4);
+                        graf.dodajKrawedz(3, 4);
+                        graf.dodajKrawedz(3, 2);
+                        graf.dodajKrawedz(2, 4);
+                        graf.dodajKrawedz(2, 1);
+                        graf.dodajKrawedz(1, 5);
+                        graf.dodajKrawedz(5, 4);
+                        graf.dodajKrawedz(4, 1);
 
+                        graf.dodajWage(0, 3,2);
+                        graf.dodajWage(0, 2,2);
+                        graf.dodajWage(0, 4,1);
+                        graf.dodajWage(3, 4,2);
+                        graf.dodajWage(3, 2,1);
+                        graf.dodajWage(2, 4,1);
+                        graf.dodajWage(2, 1,1);
+                        graf.dodajWage(1, 5,1);
+                        graf.dodajWage(5, 4,4);
+                        graf.dodajWage(4, 1,3);
+                        break;
+                    case 26:
+                        graf.Dijkstra();
+                        break;
                         default:
                             Console.WriteLine("Zły wybór");
                             break;
+
                     }
                 }
 
             }
         }
+
+
     }
-}
