@@ -37,11 +37,7 @@ namespace Grafy
                     LukiWagi[q, k] = lista;
                     Cechowanie[q] = listaCechowanie;
                 }
-
-
             }
-
-
         }
         public void dodajPrzepustowosc(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka,int wartosc1,int wartosc2=0)
         {
@@ -49,7 +45,6 @@ namespace Grafy
             lista.Add(wartosc1);
             lista.Add(wartosc2);
             this.LukiWagi[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = lista;
-
         }
         public void transpozycja()
         {
@@ -62,7 +57,6 @@ namespace Grafy
                     transpozycjaTmp[q, k] = Macierz[k, q];
                     Macierz[k, q] = 0;
                 }
-
             }
             for (int q = 0; q < rozmiar; q++)
             {
@@ -70,9 +64,7 @@ namespace Grafy
                 {
                     Macierz[q, k] = transpozycjaTmp[q, k];
                 }
-
             }
-
         }
         public void dodajWierzcholek()
         {
@@ -80,11 +72,9 @@ namespace Grafy
             {
                 Macierz[rozmiar, q] = 0;
                 Macierz[q, rozmiar] = 0;
-
             }
             rozmiar++;
             Console.WriteLine("Wierzchołek dodany. Jego numer to " + Convert.ToInt32(rozmiar - 1));
-
         }
         public void usunWierzcholek(int numerWiercholka)
         {
@@ -94,7 +84,6 @@ namespace Grafy
                 Macierz[q, numerWiercholka] = -1;
             }
             Console.WriteLine("Wierzchołek usunięty");
-
         }
         public void dodajKrawedz(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka)
         {
@@ -106,7 +95,6 @@ namespace Grafy
             else
                 Console.WriteLine("Krawędź już istnieje");
         }
-
         public void dodajWage(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka, int waga)
         {
             if (Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] == 1)
@@ -116,9 +104,7 @@ namespace Grafy
             }
             else
                 Console.WriteLine("Krawędź nie istnieje");
-
         }
-
         public void usunKrawedz(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka)
         {
 
@@ -146,8 +132,6 @@ namespace Grafy
             return stopien;
             // Console.WriteLine("Stopień równy " + stopien);
         }
-
-
         public void maxStopien()
         {
             int stopien = 0;
@@ -156,10 +140,8 @@ namespace Grafy
             int maxStopien = 0;
             while (numerWierzcholka < rozmiar)
             {
-
                 while (i < rozmiar)
                 {
-
                     if (Macierz[numerWierzcholka, i] != -1 && Macierz[numerWierzcholka, i] == 1)
                     {
                         stopien++;
@@ -210,7 +192,6 @@ namespace Grafy
             int nieparzyste = 0;
             while (numerWierzcholka < rozmiar)
             {
-
                 while (i < rozmiar)
                 {
 
@@ -240,10 +221,8 @@ namespace Grafy
 
             while (numerWierzcholka < rozmiar)
             {
-
                 while (i < rozmiar)
                 {
-
                     if (Macierz[numerWierzcholka, i] != -1 && Macierz[numerWierzcholka, i] == 1)
                     {
                         stopien++;
@@ -266,13 +245,10 @@ namespace Grafy
                 //2Console.Write(element + " ");
             }
             return ciagStopni;
-
-
         }
 
         public void podgrafIzomorficzny()
         {
-
             int[,] matrixIloczyn = new int[rozmiar, rozmiar];
             bool jest = false;
             for (int i = 0; i < rozmiar; i++)
@@ -286,10 +262,6 @@ namespace Grafy
                         {
                             w += Macierz[i, k] * Macierz[k, j];
                         }
-
-
-
-
                     }
                     if (Macierz[i, j] == -1)
                         matrixIloczyn[i, j] = -1;
@@ -299,9 +271,7 @@ namespace Grafy
                     {
                         jest = true;
                     }
-
                 }
-
             }
             Console.WriteLine(jest);
         }
@@ -345,8 +315,6 @@ namespace Grafy
                     ciagStopni.Sort();
                     ciagStopni.Reverse();
                 }
-
-
                 bool ok = true;
                 foreach (int element in ciagStopni)
                 {
@@ -357,8 +325,6 @@ namespace Grafy
                     Console.WriteLine("Ciąg nie jest grafowy");
                 else
                     Console.WriteLine("Ciąg jest grafowy");
-
-
             }
             else
                 Console.WriteLine("Ciąg liczb naturalnych nie jest ciągiem grafowym ");
@@ -377,7 +343,6 @@ namespace Grafy
                 {
                     if (this.policzStopien(w) == 1)
                         odblokowane.Add(w);
-
                 }
                 foreach (int licznik in odblokowane)
                 {
@@ -392,12 +357,10 @@ namespace Grafy
                 if (Macierz[q, q] != -1)
                     Console.WriteLine("numer " + q);
             }
-
         }
 
         public void cykl()
         {
-
             int i = 0;
             int w = 0;
             bool cykl = false;
@@ -436,13 +399,10 @@ namespace Grafy
                                 {
                                     cykl = true;
                                 }
-
                             }
                             if (q == rozmiar)
                                 i++;
                             q++;
-
-
                         }
                         kolejny = false;
                         if (i == stareI)
@@ -450,8 +410,6 @@ namespace Grafy
                         q = w;
 
                     }
-
-
                 }
                 w++;
             }
@@ -515,9 +473,7 @@ namespace Grafy
                     }
                     if (dalej == true)
                         q++;
-
                 }
-
             }
             Console.WriteLine();
             return listaWyrzuconychZeStosu;
@@ -563,10 +519,7 @@ namespace Grafy
             {
 
             }
-
         }
-
-
         public void kruskal()
         {
             int min = 1000000;
@@ -591,18 +544,13 @@ namespace Grafy
                             Console.WriteLine(min);
                         }
                     }
-
                 }
                 Console.WriteLine("{0},{1}", numerPierwszego, numerDrugiego);
                 Owiedzone[numerPierwszego, numerDrugiego] = 1;
                 Owiedzone[numerDrugiego, numerPierwszego] = 1;
                 MacierzWagi[numerPierwszego, numerDrugiego] = 10000;
                 MacierzWagi[numerDrugiego, numerPierwszego] = 10000;
-
-
             }
-
-
         }
 
         public void Dijkstra(int wierzcholek=0)
@@ -660,7 +608,6 @@ namespace Grafy
                 }
                 Console.WriteLine();
             }
-
         }
     }
         class Program
@@ -699,8 +646,6 @@ namespace Grafy
                     Console.WriteLine("26-Dijkstra");
                     Console.WriteLine("27-Dodaj przepustowść");
                     Console.WriteLine("0-Koniec");
-
-
 
                     caseSwitch = Convert.ToInt32(Console.ReadLine());
                     switch (caseSwitch)
@@ -758,7 +703,6 @@ namespace Grafy
                         case 13:
                             graf.cykl();
                             break;
-
                         case 14:
                             for (int i = 0; i < 22; i++)
                             {
@@ -768,7 +712,6 @@ namespace Grafy
                             graf.dodajKrawedz(0, 2);
                             graf.dodajKrawedz(1, 2);
                             graf.dodajKrawedz(1, 6);
-
                             graf.dodajKrawedz(6, 5);
                             graf.dodajKrawedz(5, 4);
                             graf.dodajKrawedz(3, 4);
@@ -782,7 +725,6 @@ namespace Grafy
                             graf.dodajKrawedz(7, 10);
                             graf.dodajKrawedz(7, 9);
                             graf.dodajKrawedz(10, 8);
-
                             graf.dodajKrawedz(0, 11);
                             graf.dodajKrawedz(11, 12);
                             graf.dodajKrawedz(12, 13);
@@ -801,7 +743,6 @@ namespace Grafy
                             graf.dodajKrawedz(21, 18);
                             graf.dodajKrawedz(18, 20);
                             graf.dodajKrawedz(21, 19);
-
                             break;
                         case 15:
                             for (int q = 0; q < 7; q++)
@@ -812,10 +753,6 @@ namespace Grafy
                             graf.dodajKrawedz(1, 4);
                             graf.dodajKrawedz(1, 5);
                             graf.dodajKrawedz(5, 6);
-
-
-
-
                             break;
                         case 16:
                             graf.dfs();
@@ -828,7 +765,6 @@ namespace Grafy
                             graf.dodajKrawedz(2, 5);
                             graf.dodajKrawedz(1, 3);
                             graf.dodajKrawedz(3, 4);
-
                             break;
                         case 18:
                             for (int q = 0; q < 9; q++)
@@ -845,8 +781,6 @@ namespace Grafy
                             graf.dodajKrawedz(5, 8);
                             graf.dodajKrawedz(8, 6);
                             graf.dodajKrawedz(6, 5);
-
-
                             break;
                         case 19:
                             graf.czySpojny();
@@ -862,16 +796,11 @@ namespace Grafy
                             graf.dodajKrawedz(6, 5);
                             graf.dodajKrawedz(5, 7);
                             graf.dodajKrawedz(7, 6);
-
                             graf.dodajKrawedz(8, 9);
-
-
-
                             break;
                         case 21:
                             graf.kosaraju();
                             break;
-
                         case 22:
                             Console.WriteLine("Podaj pierwszy wierzchołek");
                             numerPierwszegoWierzchołka = Convert.ToInt32(Console.ReadLine());
@@ -894,7 +823,6 @@ namespace Grafy
 
                             graf.dodajWage(0, 1, 5);
                             graf.dodajWage(0, 2, 6);
-
                             graf.dodajWage(2, 3, 7);
                             graf.dodajWage(3, 4, 4);
 
@@ -937,9 +865,6 @@ namespace Grafy
                         break;
                     }
                 }
-
             }
         }
-
-
     }
