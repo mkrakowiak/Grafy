@@ -11,23 +11,44 @@ namespace Grafy
     {
         int[,] Macierz;
         int[,] MacierzWagi;
+        ArrayList[,] LukiWagi;
+        ArrayList[] Cechowanie;
         int rozmiar = 0;
         public Grafy()
         {
             Macierz = new int[32, 32];
             MacierzWagi = new int[32, 32];
+            LukiWagi = new ArrayList[32, 32];
+            Cechowanie = new ArrayList[32];
+            ArrayList lista = new ArrayList();
+            ArrayList listaCechowanie = new ArrayList();
+            //-1 == - , -2 niesończoność , -3 ==  +
+            lista.Add(0);
+            lista.Add(0);
+            listaCechowanie.Add(-1);
+            listaCechowanie.Add(0);
+            listaCechowanie.Add(-2);
             for (int q = 0; q < 32; q++)
             {
                 for (int k = 0; k < 32; k++)
                 {
                     Macierz[q, k] = -1;
                     MacierzWagi[q, k] = 0;
-
+                    LukiWagi[q, k] = lista;
+                    Cechowanie[q] = listaCechowanie;
                 }
 
 
             }
 
+
+        }
+        public void dodajPrzepustowosc(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka,int wartosc1,int wartosc2=0)
+        {
+            ArrayList lista = new ArrayList();
+            lista.Add(wartosc1);
+            lista.Add(wartosc2);
+            this.LukiWagi[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = lista;
 
         }
         public void transpozycja()
@@ -676,7 +697,8 @@ namespace Grafy
                     Console.WriteLine("20-test case Spr czy graf jest spójny");
                     Console.WriteLine("25-test case Dijkstra");
                     Console.WriteLine("26-Dijkstra");
-                Console.WriteLine("0-Koniec");
+                    Console.WriteLine("27-Dodaj przepustowść");
+                    Console.WriteLine("0-Koniec");
 
 
 
@@ -910,7 +932,9 @@ namespace Grafy
                         default:
                             Console.WriteLine("Zły wybór");
                             break;
-
+                    case 27:
+                        graf.dodajPrzepustowosc(0, 1, 5, 2);
+                        break;
                     }
                 }
 
