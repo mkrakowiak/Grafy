@@ -39,7 +39,7 @@ namespace Grafy
                 }
             }
         }
-        public void dodajPrzepustowosc(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka,int wartosc1,int wartosc2=0)
+        public void dodajPrzepustowosc(int numerPierwszegoWierzcholka, int numerDrugiegoWierzcholka, int wartosc2, int wartosc1 = 0 )
         {
             ArrayList lista = new ArrayList();
             lista.Add(wartosc1);
@@ -90,7 +90,7 @@ namespace Grafy
             if (Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] == 0)
             {
                 Macierz[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = 1;
-                Macierz[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = 1;
+               // Macierz[numerDrugiegoWierzcholka, numerPierwszegoWierzcholka] = 1;
             }
             else
                 Console.WriteLine("Krawędź już istnieje");
@@ -553,13 +553,13 @@ namespace Grafy
             }
         }
 
-        public void Dijkstra(int wierzcholek=0)
+        public void Dijkstra(int wierzcholek = 0)
         {
             int[,] Tabela;
             Tabela = new int[this.rozmiar, this.rozmiar];
             ArrayList odwiedzoneLista = new ArrayList();
             int min = 90000000;
-            
+
             for (int i = 0; i < rozmiar; i++)
             {
                 for (int q = 0; q < rozmiar; q++)
@@ -578,23 +578,23 @@ namespace Grafy
                     }
                     else
                     {
-                        if (this.Macierz[(int)odwiedzoneLista[odwiedzoneLista.Count-1], q] == 1)
+                        if (this.Macierz[(int)odwiedzoneLista[odwiedzoneLista.Count - 1], q] == 1)
                         {
                             if (this.MacierzWagi[(int)odwiedzoneLista[odwiedzoneLista.Count - 1], q] + Tabela[i - 1, (int)odwiedzoneLista[odwiedzoneLista.Count - 1]] < Tabela[i - 1, q])
                             {
                                 Tabela[i, q] = this.MacierzWagi[(int)odwiedzoneLista[odwiedzoneLista.Count - 1], q] + Tabela[i - 1, (int)odwiedzoneLista[odwiedzoneLista.Count - 1]];
                             }
-                            else                           
-                                Tabela[i, q] = Tabela[i - 1, q];                          
+                            else
+                                Tabela[i, q] = Tabela[i - 1, q];
                         }
                         else
                             Tabela[i, q] = Tabela[i - 1, q];
                     }
                 }
-                int pom=-1;
+                int pom = -1;
                 for (int k = 0; k < rozmiar; k++)
-                {         
-                        if (Tabela[i, k] < min && odwiedzoneLista.Contains(k)==false && k!=wierzcholek)
+                {
+                    if (Tabela[i, k] < min && odwiedzoneLista.Contains(k) == false && k != wierzcholek)
                     {
                         min = Tabela[i, k];
                         pom = k;
@@ -602,11 +602,81 @@ namespace Grafy
                 }
                 odwiedzoneLista.Add(pom);
                 min = 900000000;
-                for(int p=0;p<rozmiar;p++)
+                for (int p = 0; p < rozmiar; p++)
                 {
                     Console.Write("{0} ", Tabela[i, p]);
                 }
                 Console.WriteLine();
+            }
+        }
+        public void MetodaCechowania(int wierzchołekPoczatkowy = 0)
+        {
+            //do zrobienia powrót i zmiana przepustowści
+            int min = -5;
+            bool daSie = true;
+            ArrayList odwiedzoneLista = new ArrayList();
+            int i = wierzchołekPoczatkowy;
+            odwiedzoneLista.Add(i);
+            ArrayList doCechowania = new ArrayList();
+            doCechowania.Add(-1);
+            doCechowania.Add(wierzchołekPoczatkowy);
+            doCechowania.Add(-2);
+            this.Cechowanie[wierzchołekPoczatkowy] = doCechowania;
+            while (daSie)
+            {              
+                while (i < rozmiar)
+                {
+                    if (i == wierzchołekPoczatkowy)
+                    {
+                        for (int q = 0; q < rozmiar; q++)
+                        {
+                            if (this.Macierz[i, q] == 1)
+                            {
+                                doCechowania.Add(-1);
+                                doCechowania.Add(wierzchołekPoczatkowy);
+                                    if (((int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0]) > (int)this.Cechowanie[q][2])
+                                        min = (int)this.Cechowanie[q][2];
+                                    else                                    
+                                        min = (int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0];                                                                 
+                                    doCechowania.Add(min);
+                                this.Cechowanie[q] = doCechowania;
+                                if(min != 0)
+                                    odwiedzoneLista.Add(i);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int d = 0; d < rozmiar; d++)
+                        {
+                            if ((int)this.Cechowanie[d][1] == i)
+                            {
+                                doCechowania.Add(d);
+                            }
+                        }
+                        for(int c = 0; c < rozmiar; c++)
+                        {
+                            if (this.Macierz[i, c] == 1 && odwiedzoneLista.Contains(c))
+                            {
+                                doCechowania.Add(-1);
+                                doCechowania.Add(i);
+                                if (((int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0]) > (int)this.Cechowanie[c][2])
+                                    min = (int)this.Cechowanie[c][2];
+                                else
+                                    min = (int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0];
+                                doCechowania.Add(min);
+                                if (min != 0)
+                                    this.Cechowanie[c] = doCechowania;
+                            }
+                        }
+                        i++;
+                    }
+                    i = 0;
+                }
+                if (odwiedzoneLista.Count == 1)
+                    daSie = false;
+                odwiedzoneLista.Clear();
+                odwiedzoneLista.Add(wierzchołekPoczatkowy);
             }
         }
     }
@@ -644,7 +714,8 @@ namespace Grafy
                     Console.WriteLine("20-test case Spr czy graf jest spójny");
                     Console.WriteLine("25-test case Dijkstra");
                     Console.WriteLine("26-Dijkstra");
-                    Console.WriteLine("27-Dodaj przepustowść");
+                    Console.WriteLine("27-Test Case cechowanie");
+                    Console.WriteLine("28-cehowanie");
                     Console.WriteLine("0-Koniec");
 
                     caseSwitch = Convert.ToInt32(Console.ReadLine());
@@ -827,44 +898,72 @@ namespace Grafy
                             graf.dodajWage(3, 4, 4);
 
                             break;
-                    case 25:
+                        case 25:
+                            for (int q = 0; q < 6; q++)
+                                graf.dodajWierzcholek();
+                            graf.dodajKrawedz(0, 3);
+                            graf.dodajKrawedz(0, 2);
+                            graf.dodajKrawedz(0, 4);
+                            graf.dodajKrawedz(3, 4);
+                            graf.dodajKrawedz(3, 2);
+                            graf.dodajKrawedz(2, 4);
+                            graf.dodajKrawedz(2, 1);
+                            graf.dodajKrawedz(1, 5);
+                            graf.dodajKrawedz(5, 4);
+                            graf.dodajKrawedz(4, 1);
+
+                            graf.dodajWage(0, 3, 2);
+                            graf.dodajWage(0, 2, 2);
+                            graf.dodajWage(0, 4, 1);
+                            graf.dodajWage(3, 4, 2);
+                            graf.dodajWage(3, 2, 1);
+                            graf.dodajWage(2, 4, 1);
+                            graf.dodajWage(2, 1, 1);
+                            graf.dodajWage(1, 5, 1);
+                            graf.dodajWage(5, 4, 4);
+                            graf.dodajWage(4, 1, 3);
+                            break;
+                        case 26:
+                            Console.WriteLine("Podaj wierzchołek do liczenia odległości");
+                            numerPierwszegoWierzchołka = Convert.ToInt32(Console.ReadLine());
+                            graf.Dijkstra(numerPierwszegoWierzchołka);
+                            break;
+                        case 27:
                         for (int q = 0; q < 6; q++)
                             graf.dodajWierzcholek();
-                        graf.dodajKrawedz(0, 3);
-                        graf.dodajKrawedz(0, 2);
-                        graf.dodajKrawedz(0, 4);
-                        graf.dodajKrawedz(3, 4);
-                        graf.dodajKrawedz(3, 2);
-                        graf.dodajKrawedz(2, 4);
-                        graf.dodajKrawedz(2, 1);
-                        graf.dodajKrawedz(1, 5);
-                        graf.dodajKrawedz(5, 4);
-                        graf.dodajKrawedz(4, 1);
 
-                        graf.dodajWage(0, 3,2);
-                        graf.dodajWage(0, 2,2);
-                        graf.dodajWage(0, 4,1);
-                        graf.dodajWage(3, 4,2);
-                        graf.dodajWage(3, 2,1);
-                        graf.dodajWage(2, 4,1);
-                        graf.dodajWage(2, 1,1);
-                        graf.dodajWage(1, 5,1);
-                        graf.dodajWage(5, 4,4);
-                        graf.dodajWage(4, 1,3);
+                        graf.dodajKrawedz(0, 1);
+                        graf.dodajKrawedz(0, 2);
+                        graf.dodajKrawedz(1, 2);
+                        graf.dodajKrawedz(1, 3);
+                        graf.dodajKrawedz(2, 3);
+                        graf.dodajKrawedz(3, 4);
+                        graf.dodajKrawedz(3, 5);
+                        graf.dodajKrawedz(4, 1);
+                        graf.dodajKrawedz(4, 5);
+
+                        graf.dodajPrzepustowosc(0, 1, 12);
+                        graf.dodajPrzepustowosc(0, 2, 12);
+                        graf.dodajPrzepustowosc(1, 2, 4);
+                        graf.dodajPrzepustowosc(1, 3, 10);
+                        graf.dodajPrzepustowosc(2, 3, 11);
+                        graf.dodajPrzepustowosc(3, 4, 9);
+                        graf.dodajPrzepustowosc(3, 5, 12);
+                        graf.dodajPrzepustowosc(4, 1, 6);
+                        graf.dodajPrzepustowosc(4, 5, 12);
                         break;
-                    case 26:
-                        Console.WriteLine("Podaj wierzchołek do liczenia odległości");
-                        numerPierwszegoWierzchołka = Convert.ToInt32(Console.ReadLine());
-                        graf.Dijkstra(numerPierwszegoWierzchołka);
+                    case 28:
+                        graf.MetodaCechowania();
                         break;
-                        default:
+                    default:
                             Console.WriteLine("Zły wybór");
                             break;
-                    case 27:
-                        graf.dodajPrzepustowosc(0, 1, 5, 2);
-                        break;
+                        
                     }
                 }
             }
         }
+    
 }
+
+
