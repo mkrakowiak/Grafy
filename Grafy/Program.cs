@@ -27,7 +27,7 @@ namespace Grafy
             lista.Add(0);
             listaCechowanie.Add(-1);
             listaCechowanie.Add(0);
-            listaCechowanie.Add(-2);
+            listaCechowanie.Add(9999999);
             for (int q = 0; q < 32; q++)
             {
                 for (int k = 0; k < 32; k++)
@@ -44,7 +44,8 @@ namespace Grafy
             ArrayList lista = new ArrayList();
             lista.Add(wartosc1);
             lista.Add(wartosc2);
-            this.LukiWagi[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = lista;
+            this.LukiWagi[numerPierwszegoWierzcholka, numerDrugiegoWierzcholka] = (ArrayList)lista.Clone(); ;
+            lista.Clear();
         }
         public void transpozycja()
         {
@@ -611,7 +612,6 @@ namespace Grafy
         }
         public void MetodaCechowania(int wierzchołekPoczatkowy = 0)
         {
-            //do zrobienia powrót i zmiana przepustowści
             int min = -5;
             bool daSie = true;
             ArrayList odwiedzoneLista = new ArrayList();
@@ -620,66 +620,83 @@ namespace Grafy
             ArrayList doCechowania = new ArrayList();
             doCechowania.Add(-1);
             doCechowania.Add(wierzchołekPoczatkowy);
-            doCechowania.Add(-2);
-            this.Cechowanie[wierzchołekPoczatkowy] = doCechowania;
-            while (daSie)
-            {              
-                while (i < rozmiar)
-                {
-                    if (i == wierzchołekPoczatkowy)
-                    {
-                        for (int q = 0; q < rozmiar; q++)
+            doCechowania.Add(99999);
+            this.Cechowanie[wierzchołekPoczatkowy] = (ArrayList)doCechowania.Clone();
+            doCechowania.Clear();
+            ArrayList tmp = new ArrayList();
+
+                while (daSie)
+                {                            
+                        if (i == wierzchołekPoczatkowy)
                         {
-                            if (this.Macierz[i, q] == 1)
+                            for (int q = 0; q < rozmiar; q++)
                             {
-                                doCechowania.Add(-1);
-                                doCechowania.Add(wierzchołekPoczatkowy);
+                                if (this.Macierz[i, q] == 1)
+                                {
+                                    doCechowania.Add(-1);
+                                    doCechowania.Add(wierzchołekPoczatkowy);
                                     if (((int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0]) > (int)this.Cechowanie[q][2])
                                         min = (int)this.Cechowanie[q][2];
-                                    else                                    
-                                        min = (int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0];                                                                 
+                                    else
+                                        min = (int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0];
                                     doCechowania.Add(min);
-                                this.Cechowanie[q] = doCechowania;
-                                if(min != 0)
-                                    odwiedzoneLista.Add(i);
+                                    if (min != 0)
+                                    {
+                                        this.Cechowanie[q] = (ArrayList)doCechowania.Clone();
+                                        odwiedzoneLista.Add(i);
+                                    }
+                                    doCechowania.Clear();
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        for (int d = 0; d < rozmiar; d++)
+                        else
                         {
-                            if ((int)this.Cechowanie[d][1] == i)
+                            for (int d = 0; d < rozmiar; d++)
                             {
-                                doCechowania.Add(d);
+                                if ((int)this.Cechowanie[d][1] == i)
+                                {
+                                    odwiedzoneLista.Add(d);
+                                }
                             }
-                        }
-                        for(int c = 0; c < rozmiar; c++)
-                        {
-                            if (this.Macierz[i, c] == 1 && odwiedzoneLista.Contains(c))
+                            for(int c = 0; c < rozmiar; c++)
                             {
-                                doCechowania.Add(-1);
-                                doCechowania.Add(i);
-                                if (((int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0]) > (int)this.Cechowanie[c][2])
-                                    min = (int)this.Cechowanie[c][2];
-                                else
-                                    min = (int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0];
-                                doCechowania.Add(min);
-                                if (min != 0)
-                                    this.Cechowanie[c] = doCechowania;
+                                if (this.Macierz[i, c] == 1 && odwiedzoneLista.Contains(c))
+                                {
+                                    doCechowania.Add(-1);
+                                    doCechowania.Add(i);
+                                    if (((int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0]) > (int)this.Cechowanie[c][2])
+                                        min = (int)this.Cechowanie[c][2];
+                                    else
+                                        min = (int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0];
+                                    doCechowania.Add(min);
+                                    if (min != 0)
+                                        this.Cechowanie[c] = (ArrayList)doCechowania.Clone();
+                                    doCechowania.Clear();
+                                }
                             }
+                           // if (odwiedzoneLista.Contains(rozmiar - 1))
+                           // {
+                                int v = rozmiar - 1;
+                                while (v != wierzchołekPoczatkowy)
+                                {
+                                    tmp.Add(this.Cechowanie[v][1]);
+                                    tmp.Add(this.LukiWagi[(int)this.Cechowanie[v][1], v][1]);
+                                    this.LukiWagi[(int)this.Cechowanie[v][1], v]= (ArrayList)tmp.Clone();
+                                    v = (int)this.Cechowanie[v][1];
+                                    tmp.Clear();
+                                }
+                            //}
+                       
                         }
-                        i++;
-                    }
-                    i = 0;
-                }
-                if (odwiedzoneLista.Count == 1)
-                    daSie = false;
-                odwiedzoneLista.Clear();
-                odwiedzoneLista.Add(wierzchołekPoczatkowy);
+                i++;
+                    if (odwiedzoneLista.Count == 1)
+                        daSie = false;
+                    odwiedzoneLista.Clear();
+                    odwiedzoneLista.Add(wierzchołekPoczatkowy);
+                }   
             }
         }
-    }
+    
         class Program
         {
             static void Main(string[] args)
