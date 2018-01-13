@@ -425,7 +425,7 @@ namespace Grafy
         public static void PrintValues(IEnumerable myCollection)
         {
             foreach (Object obj in myCollection)
-                Console.Write("    {0}", obj);
+                Console.Write("{0}", obj);
             Console.WriteLine();
         }
 
@@ -722,7 +722,108 @@ namespace Grafy
                 }
                 //zły warunek
            }                        
-        }               
+        }
+        
+        public void MetodaCechowania2()
+        {
+            ArrayList odwiedzoneLista = new ArrayList();
+            int i = 0;
+            bool[] czyOcechowane;
+            czyOcechowane = new bool[this.rozmiar];
+            bool daSie = true;
+            ArrayList doCechowania = new ArrayList();
+            doCechowania.Add(-1);
+            doCechowania.Add(-10);
+            doCechowania.Add(999999);
+            this.Cechowanie[0] = (ArrayList)doCechowania.Clone();
+            doCechowania.Clear();
+            odwiedzoneLista.Add(i);
+            for (int g = 0; g < rozmiar; g++)
+                czyOcechowane[g] = false;
+            czyOcechowane[0] = true; 
+            int min = 0;
+            ArrayList zbiorLokow = new ArrayList();
+            ArrayList[] luki;
+            luki = new ArrayList[100];
+
+            // Cechowanie : + albo -, wierzchołek, wartość
+            //-1 == -, 1 == +
+            while (daSie)
+            {
+                
+                for (int q = 1; q < this.rozmiar; q++)
+                {
+                    if (this.Macierz[(int)odwiedzoneLista[0], q] == 1 && czyOcechowane[q] == false)
+                    {
+                       
+                        doCechowania.Add(1);
+                        doCechowania.Add(odwiedzoneLista[0]);
+                        if (((int)this.LukiWagi[(int)odwiedzoneLista[0], q][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], q][0]) < ((int)this.Cechowanie[(int)odwiedzoneLista[0]][2]))
+                            min = ((int)this.LukiWagi[(int)odwiedzoneLista[0], q][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], q][0]);
+                        else
+                            min = ((int)this.Cechowanie[(int)odwiedzoneLista[0]][2]);
+                        doCechowania.Add(min);
+                        if (min != 0)
+                        {
+                            this.Cechowanie[q] = (ArrayList)doCechowania.Clone();
+                            czyOcechowane[q] = true;
+                            if (odwiedzoneLista.Contains(q) == false)
+                                odwiedzoneLista.Add(q);
+                        }
+                        doCechowania.Clear();
+                    }
+                }
+                odwiedzoneLista.RemoveAt(0);
+                if (odwiedzoneLista.Count == 0)
+                    daSie = false;
+                else
+                {                   
+                    if (czyOcechowane[rozmiar-1] == true)
+                    {
+                        int k = rozmiar - 1;
+                        ArrayList przygotowanieDoLukiWagi = new ArrayList();
+                        int licznik = 0;
+                        while (k != 0)
+                        {
+
+                            przygotowanieDoLukiWagi.Add((int)this.Cechowanie[rozmiar-1][2] + (int)this.LukiWagi[((int)this.Cechowanie[k][1]), k][0]);
+                            przygotowanieDoLukiWagi.Add(this.LukiWagi[((int)this.Cechowanie[k][1]), k][1]);
+                            this.LukiWagi[((int)this.Cechowanie[k][1]), k] = (ArrayList)przygotowanieDoLukiWagi.Clone();
+                            przygotowanieDoLukiWagi.Clear();
+                            zbiorLokow.Add((int)this.Cechowanie[k][1]);
+                            zbiorLokow.Add(k);
+                            luki[licznik] = (ArrayList)zbiorLokow.Clone();
+                            zbiorLokow.Clear();
+                            licznik++;
+                            k = (int)this.Cechowanie[k][1];
+                            
+                        }
+                        licznik = 0;
+                        odwiedzoneLista.Clear();
+                        odwiedzoneLista.Add(0);
+                        for (int g = 1; g < rozmiar; g++)
+                            czyOcechowane[g] = false;
+                    }
+
+                }
+            }
+            int suma = 0;
+            for(int g = 0;g<rozmiar; g++)
+            {
+                suma = suma + (int)this.LukiWagi[0, g][0];
+            }
+            Console.WriteLine("Maksymalny przekrój = {0}", suma);
+            int pom,pom2;
+            for (int j = rozmiar - 3; j >=0 ; j--)
+            {
+                pom = (int)luki[j][0];
+                pom2= (int)luki[j][1];
+                Console.WriteLine("{0},{1}", pom,pom2);
+            }
+                
+
+            
+        }
     }
     
         class Program
@@ -979,7 +1080,7 @@ namespace Grafy
 
                         graf.dodajKrawedz(0, 1);
                         graf.dodajKrawedz(0, 2);
-                        graf.dodajKrawedz(1, 2);
+                        //graf.dodajKrawedz(1,2);
                         graf.dodajKrawedz(1, 3);
                         graf.dodajKrawedz(2, 3);
                         graf.dodajKrawedz(3, 4);
@@ -989,7 +1090,7 @@ namespace Grafy
 
                         graf.dodajPrzepustowosc(0, 1, 12);
                         graf.dodajPrzepustowosc(0, 2, 12);
-                        graf.dodajPrzepustowosc(1, 2, 4);
+                       // graf.dodajPrzepustowosc(1, 2, 4);
                         graf.dodajPrzepustowosc(1, 3, 10);
                         graf.dodajPrzepustowosc(2, 3, 11);
                         graf.dodajPrzepustowosc(3, 4, 9);
@@ -998,7 +1099,7 @@ namespace Grafy
                         graf.dodajPrzepustowosc(4, 5, 12);
                         break;
                     case 28:
-                        graf.MetodaCechowania();
+                        graf.MetodaCechowania2();
                         break;
                     default:
                             Console.WriteLine("Zły wybór");
