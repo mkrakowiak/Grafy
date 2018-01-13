@@ -23,6 +23,7 @@ namespace Grafy
             ArrayList lista = new ArrayList();
             ArrayList listaCechowanie = new ArrayList();
             //-1 == - , -2 niesończoność , -3 ==  +
+            //- albo + , wierzchołek, wartość
             lista.Add(0);
             lista.Add(0);
             listaCechowanie.Add(-1);
@@ -624,78 +625,105 @@ namespace Grafy
             this.Cechowanie[wierzchołekPoczatkowy] = (ArrayList)doCechowania.Clone();
             doCechowania.Clear();
             ArrayList tmp = new ArrayList();
+            bool [] czyOcechowane;
+            czyOcechowane = new bool[rozmiar];
+            bool obiegCechowanie = true;
 
-                while (daSie)
-                {                            
-                        if (i == wierzchołekPoczatkowy)
-                        {
-                            for (int q = 0; q < rozmiar; q++)
-                            {
-                                if (this.Macierz[i, q] == 1)
-                                {
-                                    doCechowania.Add(-1);
-                                    doCechowania.Add(wierzchołekPoczatkowy);
-                                    if (((int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0]) > (int)this.Cechowanie[q][2])
-                                        min = (int)this.Cechowanie[q][2];
-                                    else
-                                        min = (int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0];
-                                    doCechowania.Add(min);
-                                    if (min != 0)
-                                    {
-                                        this.Cechowanie[q] = (ArrayList)doCechowania.Clone();
-                                        odwiedzoneLista.Add(i);
-                                    }
-                                    doCechowania.Clear();
-                                }
-                            }
-                        }
+           while (daSie)
+           {
+                
+                //if (i == wierzchołekPoczatkowy)
+                //{
+                //    for (int q = 0; q < rozmiar; q++)
+                //    {
+                //        if (this.Macierz[i, q] == 1)
+                //        {
+                //            doCechowania.Add(-1);
+                //            doCechowania.Add(wierzchołekPoczatkowy);
+                //            if (((int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0]) > (int)this.Cechowanie[q][2])
+                //                min = (int)this.Cechowanie[q][2];
+                //            else
+                //                min = (int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0];
+                //            doCechowania.Add(min);
+                //            if (min != 0)
+                //            {
+                //                this.Cechowanie[q] = (ArrayList)doCechowania.Clone();
+                //                odwiedzoneLista.Add(q);
+                //            }
+                //            doCechowania.Clear();
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //ten for źle nie powinno być i 
+                //for (int d = 0; d < rozmiar; d++)
+                //{
+                //    while (licznik < odwiedzoneLista.Count - 1)
+                //    {
+                //        if ((int)this.Cechowanie[d][1] == licznik && odwiedzoneLista.Contains(licznik))
+                //        {
+                //            odwiedzoneLista.Add(d);
+
+                //        }
+                //        licznik++;
+                //    }
+                //}
+                //odwiedzone lista dodanie do tej listy wierzchołka z osiągalnego
+                int licznikPom=0;
+                bool koniecPetl = false;
+                for(int c = 0; c < rozmiar; c++)
+                {
+                    if (this.Macierz[(int)odwiedzoneLista[0], c] == 1 && czyOcechowane[c] == false)
+                    {
+                        licznikPom = 0;
+                        if (odwiedzoneLista.Contains(c) == false)
+                            odwiedzoneLista.Add(c);
+                        doCechowania.Add(-1);
+                        doCechowania.Add((int)odwiedzoneLista[0]);
+                        //wykreślać z listy po ocechowaniu z wierzchołka kolejnych wierzchołków
+                        if (((int)this.LukiWagi[(int)odwiedzoneLista[0], c][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], c][0]) > (int)this.Cechowanie[(int)odwiedzoneLista[0]][2])
+                            min = (int)this.Cechowanie[(int)odwiedzoneLista[0]][2];
                         else
+                            min = (int)this.LukiWagi[(int)odwiedzoneLista[0], c][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], c][0];
+                        doCechowania.Add(min);
+                        if (min > 0)
                         {
-                            for (int d = 0; d < rozmiar; d++)
-                            {
-                                if ((int)this.Cechowanie[d][1] == i)
-                                {
-                                    odwiedzoneLista.Add(d);
-                                }
-                            }
-                            for(int c = 0; c < rozmiar; c++)
-                            {
-                                if (this.Macierz[i, c] == 1 && odwiedzoneLista.Contains(c))
-                                {
-                                    doCechowania.Add(-1);
-                                    doCechowania.Add(i);
-                                    if (((int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0]) > (int)this.Cechowanie[c][2])
-                                        min = (int)this.Cechowanie[c][2];
-                                    else
-                                        min = (int)this.LukiWagi[i, c][1] - (int)this.LukiWagi[i, c][0];
-                                    doCechowania.Add(min);
-                                    if (min != 0)
-                                        this.Cechowanie[c] = (ArrayList)doCechowania.Clone();
-                                    doCechowania.Clear();
-                                }
-                            }
-                           // if (odwiedzoneLista.Contains(rozmiar - 1))
-                           // {
-                                int v = rozmiar - 1;
-                                while (v != wierzchołekPoczatkowy)
-                                {
-                                    tmp.Add(this.Cechowanie[v][1]);
-                                    tmp.Add(this.LukiWagi[(int)this.Cechowanie[v][1], v][1]);
-                                    this.LukiWagi[(int)this.Cechowanie[v][1], v]= (ArrayList)tmp.Clone();
-                                    v = (int)this.Cechowanie[v][1];
-                                    tmp.Clear();
-                                }
-                            //}
-                       
+                            this.Cechowanie[c] = (ArrayList)doCechowania.Clone();
+                            czyOcechowane[c] = true;
                         }
-                i++;
-                    if (odwiedzoneLista.Count == 1)
-                        daSie = false;
+                        doCechowania.Clear();
+                    }
+                    else
+                        licznikPom++;
+                    if(c==rozmiar-1 && odwiedzoneLista.Contains(rozmiar-1)==false)
+                        odwiedzoneLista.RemoveAt(0);
+                }
+                if (odwiedzoneLista.Count == 0)
+                    daSie = false;
+                if (odwiedzoneLista.Contains(rozmiar - 1))
+                {
+                    
                     odwiedzoneLista.Clear();
                     odwiedzoneLista.Add(wierzchołekPoczatkowy);
-                }   
-            }
-        }
+                    int v = rozmiar - 1;
+                    int koniec = v;
+                   
+                    while (v != wierzchołekPoczatkowy)
+                    {
+                        tmp.Add((int)this.Cechowanie[koniec][2]+ (int)this.LukiWagi[(int)this.Cechowanie[v][1], v][0]);
+                        tmp.Add(this.LukiWagi[(int)this.Cechowanie[v][1], v][1]);
+                        this.LukiWagi[(int)this.Cechowanie[v][1], v]= (ArrayList)tmp.Clone();
+                        v = (int)this.Cechowanie[v][1];
+                        tmp.Clear();
+                    }
+                    for (int g = 0; g < rozmiar; g++)
+                        czyOcechowane[g] = false;
+                }
+                //zły warunek
+           }                        
+        }               
+    }
     
         class Program
         {
