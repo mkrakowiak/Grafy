@@ -745,7 +745,8 @@ namespace Grafy
             ArrayList zbiorLokow = new ArrayList();
             ArrayList[] luki;
             luki = new ArrayList[100];
-
+            int pom, pom2;
+            int sprPetla = 0;
             // Cechowanie : + albo -, wierzchołek, wartość
             //-1 == -, 1 == +
             while (daSie)
@@ -755,7 +756,7 @@ namespace Grafy
                 {
                     if (this.Macierz[(int)odwiedzoneLista[0], q] == 1 && czyOcechowane[q] == false)
                     {
-                       
+                        
                         doCechowania.Add(1);
                         doCechowania.Add(odwiedzoneLista[0]);
                         if (((int)this.LukiWagi[(int)odwiedzoneLista[0], q][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], q][0]) < ((int)this.Cechowanie[(int)odwiedzoneLista[0]][2]))
@@ -772,32 +773,99 @@ namespace Grafy
                         }
                         doCechowania.Clear();
                     }
+                    else
+                    if (this.Macierz[q, (int)odwiedzoneLista[0]] == 1 && czyOcechowane[q] == false)
+                    {
+                        
+                            doCechowania.Add(-1);
+                        
+                            doCechowania.Add(1);
+                        doCechowania.Add(odwiedzoneLista[0]);
+                        if ((int)this.LukiWagi[(int)odwiedzoneLista[0], q][0] < ((int)this.Cechowanie[(int)odwiedzoneLista[0]][2]))
+                            min = (int)this.LukiWagi[(int)odwiedzoneLista[0], q][0];
+                        else
+                            min = ((int)this.Cechowanie[(int)odwiedzoneLista[0]][2]);
+                        doCechowania.Add(min);
+                        if (min != 0)
+                        {
+                            this.Cechowanie[q] = (ArrayList)doCechowania.Clone();
+                            czyOcechowane[q] = true;
+                            if (odwiedzoneLista.Contains(q) == false)
+                                odwiedzoneLista.Add(q);
+                        }
+                        doCechowania.Clear();
+                    }
                 }
                 odwiedzoneLista.RemoveAt(0);
                 if (odwiedzoneLista.Count == 0)
+                {
                     daSie = false;
+                    int[] tab;
+                    tab = new int[rozmiar];
+                    Console.WriteLine("Minimalny przekrój");
+                    for (int k = 0; k < rozmiar; k++)
+                    {
+                        if (czyOcechowane[k])
+                        {
+                           // Console.WriteLine("{0}", k);
+                            for (int d = 0; d < rozmiar; d++)
+                            {
+                                if (czyOcechowane[d] == false)
+                                {
+                                    if (Macierz[k, d] == 1)
+                                    {
+                                        Console.WriteLine("{0},{1}", k, d);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+
+
+                }
                 else
-                {                   
-                    if (czyOcechowane[rozmiar-1] == true)
+                {
+                    if (czyOcechowane[rozmiar - 1] == true)
                     {
                         int k = rozmiar - 1;
                         ArrayList przygotowanieDoLukiWagi = new ArrayList();
                         int licznik = 0;
+
                         while (k != 0)
                         {
-
-                            przygotowanieDoLukiWagi.Add((int)this.Cechowanie[rozmiar-1][2] + (int)this.LukiWagi[((int)this.Cechowanie[k][1]), k][0]);
+                            sprPetla = sprPetla + 1;
+                            if ((int)Cechowanie[k][0] == 1)
+                                przygotowanieDoLukiWagi.Add((int)this.Cechowanie[rozmiar - 1][2] + (int)this.LukiWagi[((int)this.Cechowanie[k][1]), k][0]);
+                            if ((int)Cechowanie[k][0] == -1)
+                                przygotowanieDoLukiWagi.Add((int)this.Cechowanie[rozmiar - 1][2] - (int)this.LukiWagi[((int)this.Cechowanie[k][1]), k][0]);
                             przygotowanieDoLukiWagi.Add(this.LukiWagi[((int)this.Cechowanie[k][1]), k][1]);
                             this.LukiWagi[((int)this.Cechowanie[k][1]), k] = (ArrayList)przygotowanieDoLukiWagi.Clone();
                             przygotowanieDoLukiWagi.Clear();
                             zbiorLokow.Add((int)this.Cechowanie[k][1]);
                             zbiorLokow.Add(k);
                             luki[licznik] = (ArrayList)zbiorLokow.Clone();
+
+                            pom = (int)luki[licznik][0];
+                            pom2 = (int)luki[licznik][1];
+                            //Console.Write("{0},{1} ", pom, pom2);
+
                             zbiorLokow.Clear();
+
+
                             licznik++;
                             k = (int)this.Cechowanie[k][1];
-                            
+
                         }
+                        //if (odwiedzoneLista.Count == 1)
+                        //for (int j = sprPetla - 1; j >= 0; j--)
+                        //{
+                        //    pom = (int)luki[j][0];
+                        //    pom2 = (int)luki[j][1];
+                        //    Console.WriteLine("{0},{1}", pom, pom2);
+                        //}
+                        //Console.WriteLine();
+                        sprPetla = 0;
                         licznik = 0;
                         odwiedzoneLista.Clear();
                         odwiedzoneLista.Add(0);
@@ -806,23 +874,25 @@ namespace Grafy
                     }
 
                 }
+                
+
             }
             int suma = 0;
             for(int g = 0;g<rozmiar; g++)
             {
                 suma = suma + (int)this.LukiWagi[0, g][0];
             }
-            Console.WriteLine("Maksymalny przekrój = {0}", suma);
-            int pom,pom2;
-            for (int j = rozmiar - 3; j >=0 ; j--)
-            {
-                pom = (int)luki[j][0];
-                pom2= (int)luki[j][1];
-                Console.WriteLine("{0},{1}", pom,pom2);
-            }
-                
+            Console.WriteLine("Maksymalny przepływ = {0}", suma);
 
-            
+            //for (int j = rozmiar - 3; j >= 0; j--)
+            //{
+            //    pom = (int)luki[j][0];
+            //    pom2 = (int)luki[j][1];
+            //    Console.WriteLine("{0},{1}", pom, pom2);
+            //}
+
+
+
         }
     }
     
@@ -1093,7 +1163,7 @@ namespace Grafy
                        // graf.dodajPrzepustowosc(1, 2, 4);
                         graf.dodajPrzepustowosc(1, 3, 10);
                         graf.dodajPrzepustowosc(2, 3, 11);
-                        graf.dodajPrzepustowosc(3, 4, 9);
+                        graf.dodajPrzepustowosc(3, 4, 8);
                         graf.dodajPrzepustowosc(3, 5, 12);
                         graf.dodajPrzepustowosc(4, 1, 6);
                         graf.dodajPrzepustowosc(4, 5, 12);
