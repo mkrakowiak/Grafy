@@ -611,120 +611,8 @@ namespace Grafy
                 Console.WriteLine();
             }
         }
-        public void MetodaCechowania(int wierzchołekPoczatkowy = 0)
-        {
-            int min = -5;
-            bool daSie = true;
-            ArrayList odwiedzoneLista = new ArrayList();
-            int i = wierzchołekPoczatkowy;
-            odwiedzoneLista.Add(i);
-            ArrayList doCechowania = new ArrayList();
-            doCechowania.Add(-1);
-            doCechowania.Add(wierzchołekPoczatkowy);
-            doCechowania.Add(99999);
-            this.Cechowanie[wierzchołekPoczatkowy] = (ArrayList)doCechowania.Clone();
-            doCechowania.Clear();
-            ArrayList tmp = new ArrayList();
-            bool [] czyOcechowane;
-            czyOcechowane = new bool[rozmiar];
-            bool obiegCechowanie = true;
-
-           while (daSie)
-           {
-                
-                //if (i == wierzchołekPoczatkowy)
-                //{
-                //    for (int q = 0; q < rozmiar; q++)
-                //    {
-                //        if (this.Macierz[i, q] == 1)
-                //        {
-                //            doCechowania.Add(-1);
-                //            doCechowania.Add(wierzchołekPoczatkowy);
-                //            if (((int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0]) > (int)this.Cechowanie[q][2])
-                //                min = (int)this.Cechowanie[q][2];
-                //            else
-                //                min = (int)this.LukiWagi[i, q][1] - (int)this.LukiWagi[i, q][0];
-                //            doCechowania.Add(min);
-                //            if (min != 0)
-                //            {
-                //                this.Cechowanie[q] = (ArrayList)doCechowania.Clone();
-                //                odwiedzoneLista.Add(q);
-                //            }
-                //            doCechowania.Clear();
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //ten for źle nie powinno być i 
-                //for (int d = 0; d < rozmiar; d++)
-                //{
-                //    while (licznik < odwiedzoneLista.Count - 1)
-                //    {
-                //        if ((int)this.Cechowanie[d][1] == licznik && odwiedzoneLista.Contains(licznik))
-                //        {
-                //            odwiedzoneLista.Add(d);
-
-                //        }
-                //        licznik++;
-                //    }
-                //}
-                //odwiedzone lista dodanie do tej listy wierzchołka z osiągalnego
-                int licznikPom=0;
-                bool koniecPetl = false;
-                for(int c = 0; c < rozmiar; c++)
-                {
-                    if (this.Macierz[(int)odwiedzoneLista[0], c] == 1 && czyOcechowane[c] == false)
-                    {
-                        licznikPom = 0;
-                        if (odwiedzoneLista.Contains(c) == false)
-                            odwiedzoneLista.Add(c);
-                        doCechowania.Add(-1);
-                        doCechowania.Add((int)odwiedzoneLista[0]);
-                        //wykreślać z listy po ocechowaniu z wierzchołka kolejnych wierzchołków
-                        if (((int)this.LukiWagi[(int)odwiedzoneLista[0], c][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], c][0]) > (int)this.Cechowanie[(int)odwiedzoneLista[0]][2])
-                            min = (int)this.Cechowanie[(int)odwiedzoneLista[0]][2];
-                        else
-                            min = (int)this.LukiWagi[(int)odwiedzoneLista[0], c][1] - (int)this.LukiWagi[(int)odwiedzoneLista[0], c][0];
-                        doCechowania.Add(min);
-                        if (min > 0)
-                        {
-                            this.Cechowanie[c] = (ArrayList)doCechowania.Clone();
-                            czyOcechowane[c] = true;
-                        }
-                        doCechowania.Clear();
-                    }
-                    else
-                        licznikPom++;
-                    if(c==rozmiar-1 && odwiedzoneLista.Contains(rozmiar-1)==false)
-                        odwiedzoneLista.RemoveAt(0);
-                }
-                if (odwiedzoneLista.Count == 0)
-                    daSie = false;
-                if (odwiedzoneLista.Contains(rozmiar - 1))
-                {
-                    
-                    odwiedzoneLista.Clear();
-                    odwiedzoneLista.Add(wierzchołekPoczatkowy);
-                    int v = rozmiar - 1;
-                    int koniec = v;
-                   
-                    while (v != wierzchołekPoczatkowy)
-                    {
-                        tmp.Add((int)this.Cechowanie[koniec][2]+ (int)this.LukiWagi[(int)this.Cechowanie[v][1], v][0]);
-                        tmp.Add(this.LukiWagi[(int)this.Cechowanie[v][1], v][1]);
-                        this.LukiWagi[(int)this.Cechowanie[v][1], v]= (ArrayList)tmp.Clone();
-                        v = (int)this.Cechowanie[v][1];
-                        tmp.Clear();
-                    }
-                    for (int g = 0; g < rozmiar; g++)
-                        czyOcechowane[g] = false;
-                }
-                //zły warunek
-           }                        
-        }
-        
-        public void MetodaCechowania2()
+       
+        public void MetodaCechowania()
         {
             ArrayList odwiedzoneLista = new ArrayList();
             int i = 0;
@@ -810,19 +698,12 @@ namespace Grafy
                            // Console.WriteLine("{0}", k);
                             for (int d = 0; d < rozmiar; d++)
                             {
-                                if (czyOcechowane[d] == false)
-                                {
-                                    if (Macierz[k, d] == 1)
-                                    {
-                                        Console.WriteLine("{0},{1}", k, d);
-                                    }
-                                }
+                                if (czyOcechowane[d] == false)                                
+                                    if (Macierz[k, d] == 1)                                    
+                                       Console.WriteLine("{0},{1}", k, d);                                                                    
                             }
                         }
                     }
-                    
-
-
                 }
                 else
                 {
@@ -849,13 +730,9 @@ namespace Grafy
                             pom = (int)luki[licznik][0];
                             pom2 = (int)luki[licznik][1];
                             //Console.Write("{0},{1} ", pom, pom2);
-
                             zbiorLokow.Clear();
-
-
                             licznik++;
                             k = (int)this.Cechowanie[k][1];
-
                         }
                         //if (odwiedzoneLista.Count == 1)
                         //for (int j = sprPetla - 1; j >= 0; j--)
@@ -872,10 +749,7 @@ namespace Grafy
                         for (int g = 1; g < rozmiar; g++)
                             czyOcechowane[g] = false;
                     }
-
                 }
-                
-
             }
             int suma = 0;
             for(int g = 0;g<rozmiar; g++)
@@ -890,9 +764,6 @@ namespace Grafy
             //    pom2 = (int)luki[j][1];
             //    Console.WriteLine("{0},{1}", pom, pom2);
             //}
-
-
-
         }
     }
     
@@ -1169,7 +1040,7 @@ namespace Grafy
                         graf.dodajPrzepustowosc(4, 5, 12);
                         break;
                     case 28:
-                        graf.MetodaCechowania2();
+                        graf.MetodaCechowania();
                         break;
                     default:
                             Console.WriteLine("Zły wybór");
